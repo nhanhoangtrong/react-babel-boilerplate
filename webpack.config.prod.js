@@ -18,10 +18,14 @@ module.exports = {
       },
       {
         test: /\.css$/,
-        use: ['style-loader', 'css-loader?modules', 'postcss-loader',]
+        use: ExtractTextPlugin.extract({
+          loader:'css-loader?modules!postcss-loader',
+          fallbackLoader: 'style-loader',
+          publicPath: '/css/'
+        })
       },
       {
-        test: /\.html$/, use: ['file-loader?name=[name].[ext]']
+        test: /\.styl$/, use: ['style-loader', 'css-loader?modules&importLoaders=1&localIdentName=[name]_[local]', 'stylus-loader']
       },
       {
         test: /\.(png|jpg|jpeg)$/, use: ['file-loader?name=images/[name].[ext]']
