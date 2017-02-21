@@ -1,6 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { showMain, hideMain } from 'store/global/Actions'
+import { showMain, hideMain } from '../actions/globals'
+import SamplePresentation from './SamplePresentation'
 
 const mapStateToProps = (state, ownProps) => ({
 	isShownText: state.globals.get('isShownMain')
@@ -15,10 +16,4 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
 		}
 	}
 })
-export default connect(mapStateToProps, mapDispatchToProps)((props) => {
-	return (
-	<div>
-		<div>{ props.isShownText ? "Hello World!" : "" }</div>
-		<button onClick={props.onClickToggleText.bind(props, props.isShownText)}>{props.isShownText ? "Hide Text" : "Show Text"}</button>
-	</div>
-)})
+export default connect(mapStateToProps, mapDispatchToProps)(SamplePresentation)

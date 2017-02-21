@@ -1,22 +1,15 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import { AppContainer } from 'react-hot-loader'
-import App from 'components/App'
+import { fromJS } from 'immutable'
+import Root from './containers/Root'
+import storage from './libs/storage'
+import { APP_STORAGE, store, serialize, deserialize } from './constants'
 
-const render = (Component) => {
+const render = (RootComponent) => {
   ReactDOM.render(
-    <AppContainer>
-      <Component />
-    </AppContainer>,
+    <RootComponent store={store} />,
     document.getElementById('app')
   )
 }
 
-render(App)
-
-if (module.hot)
-{
-  module.hot.accept('./components/App', function() {
-  	render(App)
-  })
-}
+render(Root)
