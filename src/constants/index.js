@@ -1,15 +1,14 @@
-import { hashHistory } from 'react-router'
+import { browserHistory } from 'react-router'
+import { syncHistoryWithStore } from 'react-router-redux'
 import configureStore from '../store/configureStore'
 import storage from '../libs/storage'
-
-export const history = hashHistory
 
 export const APP_STORAGE = 'app_name'
 
 export function serialize(state = {}) {
 	const serializedState = {}
 
-	Object.keys(state).forEach( k => serializedState[k] = state[k].toJS())
+	Object.keys(state).forEach( k => serializedState[k] = state[k].toJS ? state[k].toJS() : state[k])
 
 	return serializedState
 }
@@ -21,7 +20,11 @@ export function deserialize(state = {}) {
 	return deserializedState
 }
 
-export const store = configureStore(deserialize(storage.get(APP_STORAGE)))
+export const store = configureStore()
+
+const deserializedState = deserialize(storage.get(APP_STORAGE))
+
+export const history = syncHistoryWithStore(browserHistory, store)
 
 store.subscribe(() => {
 	if(!storage.get('debug')) {

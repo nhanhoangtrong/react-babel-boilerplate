@@ -2,7 +2,7 @@ import { GLOBAL_SHOW_MAIN, GLOBAL_HIDE_MAIN } from '../actions/globals'
 
 import Immutable from 'immutable'
 
-const initialState = Immutable.Map({isShownMain: false})
+const initialState = Immutable.Map({isShownMain: false, debug: true})
 
 export default function globals(globals = initialState, action) {
 	switch (action.type) {

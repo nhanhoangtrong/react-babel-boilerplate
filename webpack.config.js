@@ -4,10 +4,11 @@ var ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 module.exports = {
   entry: [
-    'react-hot-loader/patch',
-    // require for react
-
+    'webpack-dev-server/client?http://localhost:8080',
     
+    'webpack/hot/dev-server',
+    // require for react
+    'react-hot-loader/patch',
 
     './index.js'
     // the entry point
@@ -22,15 +23,6 @@ module.exports = {
     publicPath: "/js/"
   },
   devtool: 'eval',
-  devServer: {
-    hot: true,
-    contentBase: "./src",
-    // the output path
-
-    publicPath: "/js/",
-    // match the output publicPath
-    historyApiFallback: true
-  },
   module: {
     rules: [
       {
