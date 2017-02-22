@@ -1,4 +1,4 @@
-import { createStore, compose } from 'redux'
+import { createStore } from 'redux'
 import rootReducer from '../reducers'
 
 // const createStoreWithMiddleware = compose(
@@ -18,13 +18,8 @@ export default function configureStore(initialState) {
 	if (module.hot) {
 		// Enable Webpack for HMR for reducers
 		module.hot.accept('../reducers', () => {
-			try {
-				const nextReducer = require('../reducers/index').default
-				store.replaceReducer(nextReducer)	
-			} catch (err) {
-				console.log(err)
-			}
-			
+			const nextReducer = require('../reducers/index').default
+			store.replaceReducer(nextReducer)
 		})
 	}
 

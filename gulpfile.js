@@ -1,22 +1,20 @@
-let gulp = require('gulp'),
-	stylus = require('gulp-stylus'),
-	gutil = require('gulp-util'),
-	watch = require('gulp-watch')
+const gulp = require('gulp')
+const stylus = require('gulp-stylus')
+const gutil = require('gulp-util')
 
-let path = require('path')
-let del = require('del')
-let runSequence = require('run-sequence')
+const del = require('del')
+const runSequence = require('run-sequence')
 
-let browserSync = require('browser-sync').create()
+const browserSync = require('browser-sync').create()
 
-let webpack = require('webpack')
-let webpackDevConfig = require('./webpack.config')
-let webpackProdConfig = require('./webpack.config.prod')
-let WebpackDevServer = require('webpack-dev-server')
-let webpackDevMiddleware = require('webpack-dev-middleware')
-let webpackHotMiddleware = require('webpack-hot-middleware')
+const webpack = require('webpack')
+const webpackDevConfig = require('./webpack.config')
+const webpackProdConfig = require('./webpack.config.prod')
+const WebpackDevServer = require('webpack-dev-server')
+const webpackDevMiddleware = require('webpack-dev-middleware')
+const webpackHotMiddleware = require('webpack-hot-middleware')
 
-// let webpackBundler = webpack(webpackDevConfig, function(err, stats) {
+// const webpackBundler = webpack(webpackDevConfig, function(err, stats) {
 // 	if (err) {
 // 		throw new gutil.PluginError('webpack', err)
 // 	}
@@ -24,10 +22,10 @@ let webpackHotMiddleware = require('webpack-hot-middleware')
 // })
 
 // Dev tasks
-gulp.task('stylus', function() {
+gulp.task('stylus', () => {
 	gutil.log('stylusing')
 	return gulp.src('src/stylus/**/*.styl')
-		.pipe(stylus().on('error', function(err) {
+		.pipe(stylus().on('error', (err) => {
 			gutil.log(err)
 			this.emit('end')
 		}))
@@ -37,8 +35,8 @@ gulp.task('stylus', function() {
 		}))
 })
 
-gulp.task('webpack-dev-server', function(done) {
-	let config = Object.create(webpackDevConfig)
+gulp.task('webpack-dev-server', () => {
+	const config = Object.create(webpackDevConfig)
 	config.entry[0] = 'webpack-dev-server/client?http://localhost:8080'
 
 	new WebpackDevServer(webpack(config), {
@@ -61,16 +59,16 @@ gulp.task('webpack-dev-server', function(done) {
 		  chunks: false,
 		  chunkModules: false
 		}
-	}).listen(8080, 'localhost', function (err) {
+	}).listen(8080, 'localhost', (err) => {
 		if (err) throw new gutil.PluginError('webpack-dev-server', err)
 		gutil.log('[webpack-dev-server]', 'http://localhost:8080')
 	});
-}) 
+})
 
-gulp.task('browserSync', function() {
-	let config = Object.create(webpackDevConfig)
+gulp.task('browserSync', () => {
+	const config = Object.create(webpackDevConfig)
 	config.entry[0] = 'webpack-hot-middleware/client'
-	let bundler = webpack(config)
+	const bundler = webpack(config)
 	browserSync.init({
 		server: {
 			baseDir: 'src'
@@ -95,18 +93,18 @@ gulp.task('browserSync', function() {
 })
 
 // Build production tasks
-gulp.task('build:stylus', function() {
+gulp.task('build:stylus', () => {
 	return gulp.src('src/stylus/**/*.styl')
-		.pipe(stylus().on('error', function(err) {
+		.pipe(stylus().on('error', (err) => {
 			gulp.log('[stylus]', err)
 			this.emit('end')
 		}))
 		.pipe(gulp.dest('dist/css'))
 })
 
-gulp.task('build:webpack', function(done) {
-	let config = Object.create(webpackProdConfig)
-	webpack(config, function(err, stats) {
+gulp.task('build:webpack', (done) => {
+	const config = Object.create(webpackProdConfig)
+	webpack(config, (err, stats) => {
 		if (err) {
 			throw new gutil.PluginError('[webpack]', err)
 		}
@@ -115,18 +113,18 @@ gulp.task('build:webpack', function(done) {
 	})
 })
 
-gulp.task('build:html', function(done) {
+gulp.task('build:html', () => {
 	return gulp.src('src/**/*.html')
 		.pipe(gulp.dest('dist'))
 })
 
-gulp.task('clean:dist', function(done) {
-	del('dist').then(function() {
+gulp.task('clean:dist', (done) => {
+	del('dist').then(() => {
 		done()
 	}).catch(gutil.log)
 })
 
-gulp.task('server:dist', function() {
+gulp.task('server:dist', () => {
 	browserSync.init({
 		server: {
 			baseDir: 'dist'
@@ -135,15 +133,15 @@ gulp.task('server:dist', function() {
 })
 
 // Main tasks go here
-gulp.task('build', function(done) {
+gulp.task('build', (done) => {
 	runSequence('clean:dist', ['build:stylus', 'build:webpack', 'build:html'], done)
 })
-gulp.task('dev:webpack', function(done) {
+gulp.task('dev:webpack', (done) => {
 	runSequence('build', 'webpack-dev-server', done)
 })
-gulp.task('dev:browserSync', function(done) {
+gulp.task('dev:browserSync', (done) => {
 	runSequence('browserSync', done)
 })
-gulp.task('start', function(done) {
+gulp.task('start', (done) => {
 	runSequence('build', 'server:dist', done)
 })

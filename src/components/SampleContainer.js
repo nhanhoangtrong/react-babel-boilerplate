@@ -3,12 +3,12 @@ import { connect } from 'react-redux'
 import { showMain, hideMain } from '../actions/globals'
 import SamplePresentation from './SamplePresentation'
 
-const mapStateToProps = (state, ownProps) => ({
+const mapStateToProps = (state) => ({
 	isShownText: state.globals.get('isShownMain')
 })
 
-const mapDispatchToProps = (dispatch, ownProps) => ({
-	onClickToggleText: function (isShownText) {
+const mapDispatchToProps = (dispatch) => ({
+	onClickToggleText: (isShownText) => {
 		if (isShownText) {
 			dispatch(hideMain())
 		} else {

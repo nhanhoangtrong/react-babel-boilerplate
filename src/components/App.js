@@ -1,8 +1,8 @@
-import React from 'react'
+import React, { PropTypes } from 'react'
 import style from '../stylus/main.styl'
 import { IndexLink, Link } from 'react-router'
 
-export default (props) => (
+const App = (props) => (
 	<div className={style.app}>
 		<ul className={style.nav}>
 			<li><IndexLink to="/">Index</IndexLink></li>
@@ -13,3 +13,9 @@ export default (props) => (
 		</div>
 	</div>
 )
+
+App.propTypes = {
+	children: PropTypes.object.isRequired
+}
+
+export default App

@@ -1,5 +1,6 @@
 import { browserHistory } from 'react-router'
 import { syncHistoryWithStore } from 'react-router-redux'
+import { fromJS } from 'immutable'
 import configureStore from '../store/configureStore'
 import storage from '../libs/storage'
 

@@ -7,7 +7,7 @@ import routes from '../routes'
 
 export default class Root extends Component {
 	render() {
-		let { store, history } = this.props
+		const { store, history } = this.props
 		return (
 			<Provider store={store}>
 				<Router key={Math.random()} history={history}>

@@ -1,7 +1,7 @@
 export default {
 	get: (key) => {
 		try {
-			JSON.parse(localStorage.getItem(key))
+			return JSON.parse(localStorage.getItem(key))
 		} catch (err) {
 			return null
 		}
