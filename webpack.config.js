@@ -1,6 +1,5 @@
-var path = require('path');
-var webpack = require('webpack');
-var ExtractTextPlugin = require('extract-text-webpack-plugin');
+var path = require('path')
+var webpack = require('webpack')
 
 module.exports = {
   entry: [
@@ -29,7 +28,7 @@ module.exports = {
         test: /\.jsx?$/, use: ['babel-loader'], exclude: /node_modules/
       },
       {
-        test: /\.css$/, use: ['style-loader', 'css-loader?modules', 'postcss-loader']
+        test: /\.css$/, use: ['style-loader', 'css-loader?modules&importLoaders=1&localIdentName=[name]_[local]', 'postcss-loader']
       },
       {
         test: /\.styl$/, use: ['style-loader', 'css-loader?modules&importLoaders=1&localIdentName=[name]_[local]', 'stylus-loader']

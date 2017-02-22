@@ -6,10 +6,11 @@ module.exports = {
   entry: [
     "./index.js"
   ],
-  output: [
+  context: resolve(__dirname, 'src'),
+  output: {
     filename: "bundle.js",
     path: resolve(__dirname, "dist/js")
-  ],
+  },
   devtool: "source-map",
   module: {
     rules: [
@@ -17,30 +18,27 @@ module.exports = {
         test: /\.jsx?$/, exclude: /node_modules/, use: ['babel-loader']
       },
       {
-        test: /\.css$/,
+        test: /\.styl$/,
         use: ExtractTextPlugin.extract({
-          loader:'css-loader?modules!postcss-loader',
-          fallbackLoader: 'style-loader',
+          use:['css-loader?modules&localIdentName=[local]', 'stylus-loader'],
+          fallback: 'style-loader',
           publicPath: '/css/'
         })
-      },
-      {
-        test: /\.styl$/, use: ['style-loader', 'css-loader?modules&importLoaders=1&localIdentName=[name]_[local]', 'stylus-loader']
       },
       {
         test: /\.(png|jpg|jpeg)$/, use: ['file-loader?name=images/[name].[ext]']
       }
     ]
   },
-  plugins: {
-    new webpack.DefinePlugin(
+  plugins: [
+    new webpack.DefinePlugin({
       "process.env.NODE_ENV": JSON.stringify("production"),
       __DEV__: false
-    ),
-
-    new webpack.optimize.DedupePlugin(),
-    // Eliminate duplicate in modules
+    }),
     new webpack.optimize.UglifyJsPlugin(),
     // Minify JS
-  }
+
+    new ExtractTextPlugin('../css/style.css')
+    // Extract text to output
+  ]
 }
