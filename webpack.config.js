@@ -18,7 +18,7 @@ module.exports = {
   context: path.resolve(__dirname, "src"),
   output: {
     filename: "bundle.js",
-    path: path.resolve(__dirname, "src/js"),
+    path: path.resolve(__dirname, "dist/js"),
     publicPath: "/js/"
   },
   devtool: 'eval',

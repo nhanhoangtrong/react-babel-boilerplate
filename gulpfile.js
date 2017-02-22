@@ -42,7 +42,7 @@ gulp.task('webpack-dev-server', function(done) {
 	config.entry[0] = 'webpack-dev-server/client?http://localhost:8080'
 
 	new WebpackDevServer(webpack(config), {
-		contentBase: './src',
+		contentBase: './dist',
 		publicPath: config.output.publicPath,
 		hot: true,
 		historyApiFallback: true,
@@ -94,12 +94,6 @@ gulp.task('browserSync', function() {
 	})
 })
 
-gulp.task('dev', ['browserSync', 'stylus'], function() {
-	watch('./stylus/main.styl', function(vinyl) {
-		gulp.start('stylus')
-	})
-})
-
 // Build production tasks
 gulp.task('build:stylus', function() {
 	return gulp.src('src/stylus/**/*.styl')
@@ -140,6 +134,16 @@ gulp.task('server:dist', function() {
 	})
 })
 
+// Main tasks go here
 gulp.task('build', function(done) {
 	runSequence('clean:dist', ['build:stylus', 'build:webpack', 'build:html'], done)
+})
+gulp.task('dev:webpack', function(done) {
+	runSequence('build', 'webpack-dev-server', done)
+})
+gulp.task('dev:browserSync', function(done) {
+	runSequence('browserSync', done)
+})
+gulp.task('start', function(done) {
+	runSequence('build', 'server:dist', done)
 })
