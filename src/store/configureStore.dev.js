@@ -1,5 +1,6 @@
 import { createStore } from 'redux'
 import rootReducer from '../reducers'
+import enhancer from './enhancer'
 
 // const createStoreWithMiddleware = compose(
 // 	persistState(getDebugSessionKey())
@@ -12,7 +13,9 @@ function getDebugSessionKey() {
 
 export default function configureStore(initialState) {
 	/* eslint-disable no-underscore-dangle */
-	const store = createStore(rootReducer, initialState, window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__())
+	const devToolExtension = window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+
+	const store = createStore(rootReducer, initialState, enhancer(devToolExtension))
 	/* eslint-enable */
 
 	if (module.hot) {
