@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom'
 import { AppContainer } from 'react-hot-loader'
 import Root from './containers/Root'
 import injectTapEventPlugin from 'react-tap-event-plugin'
-import { store, history } from './constants'
+import { store, syncHistory } from './store'
 
 // ==== Needed for onTouchTap
 //			Note: This should only be instantiated once!
@@ -13,7 +13,7 @@ injectTapEventPlugin();
 const render = (RootComponent) => {
 	ReactDOM.render(
 		<AppContainer>
-			<RootComponent store={store} history={history}/>
+			<RootComponent store={store} history={syncHistory}/>
 		</AppContainer>,
 		document.getElementById('app')
 	)
