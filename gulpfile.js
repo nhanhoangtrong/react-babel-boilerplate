@@ -21,14 +21,19 @@ const webpackHotMiddleware = require('webpack-hot-middleware')
 // 	gutil.log("[webpack]", stats.toString())
 // })
 
+// Error log func
+const handlePluginError = (pluginName) => {
+	return function(err) {
+		gutil.log(pluginName, err.message)
+		this.emit('end')
+	}
+}
+
 // Dev tasks
 gulp.task('stylus', () => {
 	gutil.log('stylusing')
 	return gulp.src('src/stylus/**/*.styl')
-		.pipe(stylus().on('error', (err) => {
-			gutil.log(err)
-			this.emit('end')
-		}))
+		.pipe(stylus().on('error', handlePluginError('stylus')))
 		.pipe(gulp.dest('src/css'))
 		.pipe(browserSync.stream({
 			once: true
@@ -95,10 +100,7 @@ gulp.task('browserSync', () => {
 // Build production tasks
 gulp.task('build:stylus', () => {
 	return gulp.src('src/stylus/**/*.styl')
-		.pipe(stylus().on('error', (err) => {
-			gulp.log('[stylus]', err)
-			this.emit('end')
-		}))
+		.pipe(stylus().on('error', handlePluginError('stylus')))
 		.pipe(gulp.dest('dist/css'))
 })
 
