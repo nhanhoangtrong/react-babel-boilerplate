@@ -4,9 +4,10 @@
   "description": "My bootstrap project",
   "main": "index.js",
   "scripts": {
-    "build": "webpack --config webpack.config.prod.js",
-    "watch": "webpack-dev-server",
-    "gulp:dev": "gulp dev",
+    "start": "gulp start",
+    "build": "gulp build",
+    "watch": "gulp dev:browserSync",
+    "watch:webpack": "gulp dev:webpack",
     "clean": "rimraf ./dist",
     "lint": "eslint .",
     "test": "echo \"Error: no test specified\" && exit 1"
