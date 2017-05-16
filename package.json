@@ -26,6 +26,7 @@
   },
   "homepage": "https://github.com/siege250294/kendy-react-bootstrap#readme",
   "dependencies": {
+    "gulp-imagemin": "^3.2.0",
     "immutable": "^3.8.1",
     "prop-types": "^15.5.8",
     "react": "^15.3.2",

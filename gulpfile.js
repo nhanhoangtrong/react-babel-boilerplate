@@ -1,6 +1,7 @@
 const gulp = require('gulp')
 const stylus = require('gulp-stylus')
 const gutil = require('gulp-util')
+const imagemin = require('gulp-imagemin')
 
 const del = require('del')
 const runSequence = require('run-sequence')
@@ -120,6 +121,19 @@ gulp.task('build:html', () => {
 		.pipe(gulp.dest('dist'))
 })
 
+gulp.task('build:fonts', () => {
+	return gulp.src('src/fonts/**/*')
+		.pipe(gutil.noop())
+		// TODO: using another fonts converter for web
+		.pipe(gulp.dest('dist/fonts'))
+})
+
+gulp.task('build:imagemin', () => {
+	return gulp.src('src/img/**/*')
+		.pipe(imagemin().on('error', handlePluginError('imagemin')))
+		.pipe(gulp.dest('dist/img'))
+})
+
 gulp.task('clean:dist', (done) => {
 	del('dist').then(() => {
 		done()
@@ -136,7 +150,7 @@ gulp.task('server:dist', () => {
 
 // Main tasks go here
 gulp.task('build', (done) => {
-	runSequence('clean:dist', ['build:stylus', 'build:webpack', 'build:html'], done)
+	runSequence('clean:dist', ['build:stylus', 'build:webpack', 'build:html', 'build:imagemin', 'build:fonts'], done)
 })
 gulp.task('dev:webpack', (done) => {
 	runSequence('build', 'webpack-dev-server', done)
