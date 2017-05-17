@@ -4,7 +4,7 @@ var webpack = require('webpack')
 module.exports = {
   entry: [
     'webpack-dev-server/client?http://localhost:8080',
-    
+
     'webpack/hot/dev-server',
     // require for react
     'react-hot-loader/patch',
@@ -34,7 +34,7 @@ module.exports = {
         test: /\.styl$/, use: ['style-loader', 'css-loader?modules&importLoaders=1&localIdentName=[name]_[local]', 'stylus-loader']
       },
       {
-        test: /\.(png|jpg|jpeg)$/, use: ['file-loader?name=./images/[name].[ext]']
+        test: /\.(png|jpg|jpeg)$/, use: ['file-loader?name=../img/[name].[ext]']
       }
     ]
   },
