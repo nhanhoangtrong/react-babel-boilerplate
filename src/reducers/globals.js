@@ -1,16 +1,16 @@
-import { GLOBAL_SHOW_MAIN, GLOBAL_HIDE_MAIN } from '../actions/globals'
+import { GLOBAL_SHOW_MAIN, GLOBAL_HIDE_MAIN } from '../types';
 
-import Immutable from 'immutable'
+import Immutable from 'immutable';
 
-const initialState = Immutable.Map({isShownMain: false, debug: true})
+const initialState = Immutable.Map({isShownMain: false, debug: true});
 
 export default (globals = initialState, action) => {
 	switch (action.type) {
 	case GLOBAL_SHOW_MAIN:
-		return globals.set('isShownMain', true)
+		return globals.set('isShownMain', true);
 	case GLOBAL_HIDE_MAIN:
-		return globals.set('isShownMain', false)
+		return globals.set('isShownMain', false);
 	default:
-		return globals
+		return globals;
 	}
-}
+};

@@ -1,0 +1,2 @@
+export const GLOBAL_SHOW_MAIN = 'GLOBAL_SHOW_MAIN';
+export const GLOBAL_HIDE_MAIN = 'GLOBAL_HIDE_MAIN';

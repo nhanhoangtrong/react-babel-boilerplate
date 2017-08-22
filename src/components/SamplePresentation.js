@@ -1,6 +1,6 @@
-import React from 'react'
-import PropTypes from 'prop-types'
-import style from '../stylus/main.styl'
+import React from 'react';
+import PropTypes from 'prop-types';
+import style from '../stylus/main.styl';
 
 const SamplePresentation = (props) => {
 	return (
@@ -8,12 +8,12 @@ const SamplePresentation = (props) => {
 			<div>{ props.isShownText ? 'Hello World!' : '' }</div>
 			<button onClick={props.onClickToggleText.bind(props, props.isShownText)}>{props.isShownText ? 'Hide Text' : 'Show Text'}</button>
 		</div>
-	)
-}
+	);
+};
 
 SamplePresentation.propTypes = {
 	isShownText: PropTypes.bool.isRequired,
-	onClickToggleText: PropTypes.func.isRequired
-}
+	onClickToggleText: PropTypes.func.isRequired,
+};
 
-export default SamplePresentation
+export default SamplePresentation;

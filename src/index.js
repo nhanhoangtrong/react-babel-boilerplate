@@ -1,9 +1,9 @@
-import React from 'react'
-import ReactDOM from 'react-dom'
-import { AppContainer } from 'react-hot-loader'
-import Root from './containers/Root'
-import injectTapEventPlugin from 'react-tap-event-plugin'
-import { store, syncHistory } from './store'
+import React from 'react';
+import ReactDOM from 'react-dom';
+import { AppContainer } from 'react-hot-loader';
+import Root from './containers/Root';
+import injectTapEventPlugin from 'react-tap-event-plugin';
+import { store, syncHistory } from './store';
 
 // ==== Needed for onTouchTap
 //			Note: This should only be instantiated once!
@@ -16,14 +16,14 @@ const render = (RootComponent) => {
 			<RootComponent store={store} history={syncHistory}/>
 		</AppContainer>,
 		document.getElementById('app')
-	)
-}
+	);
+};
 
-render(Root)
+render(Root);
 
 if (module.hot) {
 	module.hot.accept('./containers/Root', () => {
-		const NewRoot = require('./containers/Root').default
-		render(NewRoot)
-	})
+		const NewRoot = require('./containers/Root').default;
+		render(NewRoot);
+	});
 }
