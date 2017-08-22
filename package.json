@@ -17,7 +17,13 @@
     "url": "git+https://github.com/siege250294/kendy-react-bootstrap.git"
   },
   "keywords": [
-    "react"
+    "react",
+    "redux",
+    "immutable",
+    "boilerplate",
+    "javascript",
+    "JSX",
+    "webpack"
   ],
   "author": "Kendy Hoang",
   "license": "MIT",
@@ -32,10 +38,12 @@
     "prop-types": "^15.5.10",
     "react": "^15.6.1",
     "react-dom": "^15.6.1",
+    "react-motion": "^0.5.0",
     "react-redux": "^4.4.8",
     "react-router": "^3.0.5",
     "react-router-redux": "^4.0.8",
     "react-tap-event-plugin": "^2.0.1",
+    "react-transition-group": "^2.2.0",
     "redux": "^3.7.2",
     "redux-thunk": "^2.2.0"
   },
