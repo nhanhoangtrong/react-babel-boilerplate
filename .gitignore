@@ -3,6 +3,10 @@
 # Build folder
 dist
 
+# Build CSS and JS
+src/css
+src/js
+
 # MacOS .DS_Store
 .DS_Store
 
