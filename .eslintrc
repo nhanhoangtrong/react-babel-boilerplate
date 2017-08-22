@@ -118,7 +118,7 @@
       "tab"
     ],                              // http://eslint.org/docs/rules/indent
     "brace-style": [
-      2,                          
+      2,
       "1tbs", {
         "allowSingleLine": true
       }
@@ -183,7 +183,7 @@
     "react/react-in-jsx-scope": 2,
     "react/self-closing-comp": 2,
     "react/sort-comp": 2,
-    "react/wrap-multilines": 2,
+    "react/jsx-wrap-multilines": 2,
     "react/prefer-stateless-function": [1, { "ignorePureComponents": true }]
   },
   "plugins": [
