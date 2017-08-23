@@ -23,7 +23,7 @@ module.exports = {
 		publicPath: '/js/'
 	},
 	target: 'web',
-	devtool: 'eval',
+	devtool: 'eval-source-map',
 	module: {
 		rules: [
 			{
