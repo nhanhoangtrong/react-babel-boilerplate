@@ -13,9 +13,9 @@ function getDebugSessionKey() {
 
 export default function configureStore(initialState) {
 	/* eslint-disable no-underscore-dangle */
-	const devToolExtension = window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__();
+	const createEnhancedStore = window.__REDUX_DEVTOOLS_EXTENSION__ ? enhancer(window.__REDUX_DEVTOOLS_EXTENSION__) : enhancer;
 
-	const store = createStore(rootReducer, initialState, enhancer(devToolExtension));
+	const store = createEnhancedStore(rootReducer, initialState);
 	/* eslint-enable */
 
 	if (module.hot) {

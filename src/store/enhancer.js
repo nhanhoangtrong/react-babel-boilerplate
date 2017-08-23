@@ -1,4 +1,4 @@
-import { compose, applyMiddleware } from 'redux';
+import { applyMiddleware } from 'redux';
 import thunk from 'redux-thunk';
 
-export default compose.bind(null, applyMiddleware(thunk));
+export default applyMiddleware(thunk);
