@@ -3,6 +3,7 @@ const path = require('path');
 
 const stylus = require('gulp-stylus');
 const gutil = require('gulp-util');
+const watch = require('gulp-watch');
 const imagemin = require('gulp-imagemin');
 
 const del = require('del');
@@ -30,17 +31,25 @@ const handlePluginError = (pluginName) => {
 		gutil.log(gutil.colors.yellow(pluginName), gutil.colors.red(err.message));
 		this.emit('end');
 	};
-}
+};
 
 /*
 * All development building and running tasks
 */
 
 // Building stylus task for watching in development
-gulp.task('stylus', () => {
-	return gulp.src('src/stylus/**/*.styl')
-		.pipe(stylus().on('error', handlePluginError('stylus')))
+gulp.task('watch:stylus', () => {
+	return watch('src/stylus/**/*.styl')
+		.pipe(stylus().on('error', handlePluginError('watch:stylus')))
 		.pipe(gulp.dest('src/css'))
+		.pipe(browserSync.stream({
+			once: true,
+		}));
+});
+
+// Building image task for watching in development
+gulp.task('watch:image', () => {
+	return watch('src/img/**/*')
 		.pipe(browserSync.stream({
 			once: true,
 		}));
@@ -54,6 +63,8 @@ gulp.task('webpack-dev-server', () => {
 	new WebpackDevServer(webpack(config), {
 		contentBase: './dist',
 		publicPath: config.output.publicPath,
+		open: true,
+		openPage: '/',
 		hot: true,
 		inline: true,
 		historyApiFallback: true,
@@ -68,9 +79,9 @@ gulp.task('webpack-dev-server', () => {
 		  colors: true,
 		  version: false,
 		  hash: false,
-		  timings: false,
-		  chunks: false,
-		  chunkModules: false,
+		  timings: true,
+		  chunks: true,
+		  chunkModules: true,
 		},
 	}).listen(parseInt(process.env.DEV_PORT || 8080), process.env.DEV_HOST || 'localhost', (err) => {
 		if (err) throw new gutil.PluginError('webpack-dev-server', err);
@@ -102,7 +113,7 @@ gulp.task('browserSync', () => {
 			}),
 		],
 		files: [
-			'src/css/**/*.css', 'src/**/*.html'
+			'src/css/**/*.css', 'src/**/*.html',
 		],
 		open: true,
 	});
