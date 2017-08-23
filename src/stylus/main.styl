@@ -1,7 +1,14 @@
-background_color = #7F8AFE
+@import '~nib/lib/nib/index'
+color_gradient_summer_start = #22c1c3
+color_gradient_summer_end = #fdbb2d
+color_crazy_orange_i_start = #D38312
+color_crazy_orange_i_end = #A83279
+
+html, body
+    margin 0
+    padding 0
 
 .app
-  background-color background_color
-  color #fbf
-  margin 50px
-  padding 20px 40px
+    background linear-gradient(left, color_crazy_orange_i_start, color_crazy_orange_i_end)
+    color #fbf
+    padding 20px 40px
