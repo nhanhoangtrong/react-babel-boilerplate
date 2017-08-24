@@ -9,7 +9,7 @@
     "dev:browserSync": "gulp dev:browserSync",
     "dev:webpack": "gulp dev:webpack",
     "clean": "rimraf ./dist",
-    "lint": "eslint --fix .",
+    "lint": "eslint --ext .jsx --ext .js --fix .",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
