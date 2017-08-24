@@ -1,7 +1,7 @@
 {
-  "name": "kendy-react-bootstap",
+  "name": "kendy-react-babel-boilerplate",
   "version": "1.0.0",
-  "description": "My bootstrap project",
+  "description": "My React app bootstrap project for quick development",
   "main": "index.js",
   "scripts": {
     "start": "gulp start",
@@ -14,7 +14,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/siege250294/kendy-react-bootstrap.git"
+    "url": "git+https://github.com/nhanhoangtrong/kendy-react-babel-boilerplate.git"
   },
   "keywords": [
     "react",
@@ -28,9 +28,9 @@
   "author": "Kendy Hoang",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/siege250294/kendy-react-bootstrap/issues"
+    "url": "https://github.com/nhanhoangtrong/kendy-react-babel-boilerplate/issues"
   },
-  "homepage": "https://github.com/siege250294/kendy-react-bootstrap#readme",
+  "homepage": "https://github.com/nhanhoangtrong/kendy-react-babel-boilerplate#readme",
   "dependencies": {
     "classnames": "^2.2.5",
     "immutable": "^3.8.1",
