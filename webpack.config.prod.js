@@ -19,7 +19,7 @@ module.exports = {
 	    modules: ['node_modules'],
 		extensions: ['.js', '.jsx', '.json',],
 		alias: {
-			'@app': path.resolve(__dirname, 'src'),
+			'@app': resolve(__dirname, 'src'),
 		},
 	},
 	target: 'web',
