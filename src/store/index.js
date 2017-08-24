@@ -6,23 +6,23 @@ import storage from '@app/libs/storage';
 import { APP_STORAGE } from '@app/globals';
 
 export function serialize(state = {}) {
-	const serializedState = {};
+    const serializedState = {};
 
-	Object.keys(state).forEach( k => {
-		serializedState[k] = state[k].toJS ? state[k].toJS() : state[k];
-	});
+    Object.keys(state).forEach( k => {
+        serializedState[k] = state[k].toJS ? state[k].toJS() : state[k];
+    });
 
-	return serializedState;
+    return serializedState;
 }
 
 export function deserialize(state = {}) {
-	const deserializedState = {};
+    const deserializedState = {};
 
-	Object.keys(state).forEach( k => {
-		deserializedState[k] = fromJS(state[k]);
-	});
+    Object.keys(state).forEach( k => {
+        deserializedState[k] = fromJS(state[k]);
+    });
 
-	return deserializedState;
+    return deserializedState;
 }
 
 const deserializedState = deserialize(storage.get(APP_STORAGE));
@@ -32,7 +32,7 @@ export const store = configureStore(deserializedState);
 export const syncHistory = syncHistoryWithStore(browserHistory, store);
 
 store.subscribe(() => {
-	if(!storage.get('debug')) {
+    if(!storage.get('debug')) {
     	storage.set(APP_STORAGE, serialize(store.getState()));
-	}
+    }
 });

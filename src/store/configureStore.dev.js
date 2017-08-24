@@ -7,24 +7,24 @@ import enhancer from './enhancer';
 // )(createStore)
 
 function getDebugSessionKey() {
-	const matches = window.location.href.match(/[?&]debug_session=([^&]+)\b/);
-	return (matches && matches.length > 0) ? matches[1] : null;
+    const matches = window.location.href.match(/[?&]debug_session=([^&]+)\b/);
+    return (matches && matches.length > 0) ? matches[1] : null;
 }
 
 export default function configureStore(initialState) {
 	/* eslint-disable no-underscore-dangle */
-	const createEnhancedStore = window.__REDUX_DEVTOOLS_EXTENSION__ ? enhancer(window.__REDUX_DEVTOOLS_EXTENSION__) : enhancer;
+    const createEnhancedStore = window.__REDUX_DEVTOOLS_EXTENSION__ ? enhancer(window.__REDUX_DEVTOOLS_EXTENSION__) : enhancer;
 
-	const store = createEnhancedStore(rootReducer, initialState);
+    const store = createEnhancedStore(rootReducer, initialState);
 	/* eslint-enable */
 
-	if (module.hot) {
+    if (module.hot) {
 		// Enable Webpack for HMR for reducers
-		module.hot.accept('../reducers', () => {
-			const nextReducer = require('../reducers/index').default;
-			store.replaceReducer(nextReducer);
-		});
-	}
+        module.hot.accept('../reducers', () => {
+            const nextReducer = require('../reducers/index').default;
+            store.replaceReducer(nextReducer);
+        });
+    }
 
-	return store;
+    return store;
 }

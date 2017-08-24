@@ -5,7 +5,7 @@ import SampleContainer from '@app/containers/SampleContainer';
 import About from '@app/components/About';
 
 export default createRoutes([
-	<Route path="/" component={App}>
+    <Route path="/" component={App}>
 		<IndexRoute component={SampleContainer} />
 		<Route path="/about" component={About} />
 	</Route>

@@ -115,7 +115,7 @@
      */
     "indent": [
       2,
-      "tab"
+      4
     ],                              // http://eslint.org/docs/rules/indent
     "brace-style": [
       2,
