@@ -1,4 +1,4 @@
-import { GLOBAL_SHOW_MAIN, GLOBAL_HIDE_MAIN } from '../types';
+import { GLOBAL_SHOW_MAIN, GLOBAL_HIDE_MAIN } from '@app/types';
 
 import Immutable from 'immutable';
 

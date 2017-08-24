@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import style from '../stylus/main.styl';
+import style from '@app/stylus/main.styl';
 
 const SamplePresentation = (props) => {
 	return (

@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { showMain, hideMain } from '../actions/globals';
-import SamplePresentation from './SamplePresentation';
+import { showMain, hideMain } from '@app/actions/globals';
+import SamplePresentation from '@app/components/SamplePresentation';
 
 const mapStateToProps = (state) => ({
 	isShownText: state.globals.get('isShownMain'),

@@ -2,8 +2,8 @@ import { browserHistory } from 'react-router';
 import { syncHistoryWithStore } from 'react-router-redux';
 import { fromJS } from 'immutable';
 import configureStore from './configureStore';
-import storage from '../libs/storage';
-import { APP_STORAGE } from '../globals';
+import storage from '@app/libs/storage';
+import { APP_STORAGE } from '@app/globals';
 
 export function serialize(state = {}) {
 	const serializedState = {};
