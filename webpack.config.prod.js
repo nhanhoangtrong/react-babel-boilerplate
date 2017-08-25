@@ -2,8 +2,14 @@ var webpack = require('webpack');
 var { resolve } = require('path');
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
 
-var extractCSSTextPlugin = new ExtractTextPlugin('./css/css.css');
-var extractStylusTextPlugin = new ExtractTextPlugin('./css/stylus.css');
+var extractCSSTextPlugin = new ExtractTextPlugin({
+	filename: './css/css.css',
+	ignoreOrder: true,
+});
+var extractStylusTextPlugin = new ExtractTextPlugin({
+	filename: './css/style.css',
+	ignoreOrder: true,
+});
 
 module.exports = {
 	entry: [
