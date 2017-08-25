@@ -1,6 +1,7 @@
 var webpack = require('webpack');
-var { resolve } = require('path');
+var path, { resolve } = require('path');
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
+var HtmlWebpackPlugin = require('html-webpack-plugin');
 
 var extractCSSTextPlugin = new ExtractTextPlugin({
 	filename: 'css/css.css',
@@ -52,7 +53,6 @@ module.exports = {
 								localIdentName: '[name]_[local]',
 							}
 						},
-						'postcss-loader',
 					],
 					fallback: 'style-loader',
 					publicPath: '/assets/css/',
@@ -76,19 +76,29 @@ module.exports = {
 				}),
 			},
 			{
-				test: /\.(png|jpg|jpeg|gif|svg)$/,
+				test: /\.(png|jpe?g|gif|svg)$/,
 				use: [
 				    {
 				        loader: 'file-loader',
 				        options: {
 							name: '[path][name].[ext]',
-							// Don't emit file to build folder cause we use gulp to minimize images
-							emitFile: false,
 				        },
 				    },
 				],
-			}
-		]
+			},
+			{
+				test: /\.(eot|ttf|woff|woff2)$/,
+				use: [
+					{
+						loader: 'file-loader',
+						options: {
+							name: '[path][name].[ext]',
+							publicPath: '/assets/',
+						},
+					},
+				],
+			},
+		],
 	},
 	plugins: [
 		new webpack.DefinePlugin({
@@ -101,5 +111,10 @@ module.exports = {
 		extractStylusTextPlugin,
 		extractCSSTextPlugin,
 		// Extract text to output
-	]
-}
+
+		new HtmlWebpackPlugin({
+			filename: '../index.html',
+			template: resolve(__dirname, 'src/index.ejs'),
+		}),
+	],
+};

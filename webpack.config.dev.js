@@ -1,5 +1,6 @@
 var path = require('path');
 var webpack = require('webpack');
+var HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
 	entry: [
@@ -55,7 +56,6 @@ module.exports = {
 								localIdentName: '[name]_[local]',
 							},
 						},
-						'postcss-loader',
 				],
 			},
 			{
@@ -84,6 +84,17 @@ module.exports = {
 				    },
 				],
 			},
+			{
+				test: /\.(eot|ttf|woff|woff2)$/,
+				use: [
+					{
+						loader: 'file-loader',
+						options: {
+							name: '[path][name].[ext]',
+						},
+					},
+				],
+			},
 		],
 	},
 	plugins: [
@@ -93,6 +104,9 @@ module.exports = {
 		new webpack.DefinePlugin({
 			'process.env.NODE_ENV': JSON.stringify('development'),
 			__DEV__: true
+		}),
+		new HtmlWebpackPlugin({
+			template: path.resolve(__dirname, 'src/index.ejs'),
 		}),
 	],
 };

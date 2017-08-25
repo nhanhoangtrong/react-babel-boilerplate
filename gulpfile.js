@@ -47,14 +47,6 @@ gulp.task('watch:stylus', () => {
 }));
 });
 
-// Building image task for watching in development
-gulp.task('watch:image', () => {
-    return watch('src/img/**/*')
-		.pipe(browserSync.stream({
-            once: true,
-        }));
-});
-
 // Running a Webpack development server using Webpack Dev Server package
 gulp.task('webpack-dev-server', () => {
     const config = Object.create(webpackDevConfig);
@@ -67,7 +59,12 @@ gulp.task('webpack-dev-server', () => {
         openPage: '/',
         hot: true,
         inline: true,
-        historyApiFallback: true,
+        historyApiFallback: {
+            index: config.output.publicPath,
+            rewrites: {
+                from: /./, to: config.output.publicPath,
+            },
+        },
 		// It suppress error shown in console, so it has to be set to false.
         quiet: false,
 		// It suppress everything except error, so it has to be set to false as well
@@ -85,37 +82,7 @@ gulp.task('webpack-dev-server', () => {
         },
     }).listen(parseInt(process.env.DEV_PORT, 10) || 8080, process.env.DEV_HOST || 'localhost', (err) => {
         if (err) throw new gutil.PluginError('webpack-dev-server', err);
-        gutil.log('[webpack-dev-server]', 'Started on http://localhost:8080');
-    });
-});
-
-// Running a Browser Sync development server using Webpack Hot Middleware and Webpack Dev Middleware
-gulp.task('browserSync', () => {
-    const config = Object.create(webpackDevConfig);
-    config.entry[0] = 'webpack-hot-middleware/client';
-    const webpackBundler = webpack(config);
-    browserSync.init({
-        server: {
-            baseDir: 'src',
-        },
-        port: parseInt(process.env.DEV_PORT, 10) || 8080,
-        host: process.env.DEV_HOST || 'localhost',
-        middleware: [
-            webpackHotMiddleware(webpackBundler),
-            webpackDevMiddleware(webpackBundler, {
-                hot: true,
-                inline: true,
-                historyApiFallback: true,
-                publicPath: config.output.publicPath,
-                stats: {
-                    colors: true
-                },
-            }),
-        ],
-        files: [
-            'src/css/**/*.css', 'src/**/*.html',
-        ],
-        open: true,
+        gutil.log('[webpack-dev-server]', 'Started on http://' + process.env.DEV_HOST + ':' + process.env.DEV_PORT);
     });
 });
 
@@ -137,30 +104,11 @@ gulp.task('build:webpack', (done) => {
         if (err) {
             throw new gutil.PluginError('[build:webpack]', err);
         }
-        gutil.log('[build:webpack]', stats.toString());
+        gutil.log('[build:webpack]', stats.toString({
+            colors: true,
+        }));
         done();
     });
-});
-
-// Minimizing HTML files to distribution folder
-gulp.task('build:html', () => {
-    return gulp.src('src/**/*.html')
-		.pipe(gulp.dest('dist/'));
-});
-
-// Converting font files to distribution folder
-gulp.task('build:fonts', () => {
-    return gulp.src('src/fonts/**/*')
-		.pipe(gutil.noop())
-		// TODO: using another fonts converter for web
-        .pipe(gulp.dest('dist/assets/fonts'));
-});
-
-// Minimizing images and then streaming to distribution folder
-gulp.task('build:imagemin', () => {
-    return gulp.src('src/img/**/*')
-		.pipe(imagemin().on('error', handlePluginError('build:imagemin')))
-        .pipe(gulp.dest('dist/assets/img'));
 });
 
 // Cleaning files in distribution folder
@@ -188,17 +136,12 @@ gulp.task('server:dist', () => {
 
 // Building files to distribution folder
 gulp.task('build', (done) => {
-    runSequence('clean:dist', ['build:webpack', 'build:html', 'build:imagemin', 'build:fonts'], done);
+    runSequence('clean:dist', 'build:webpack', done);
 });
 
 // Running Webpack Dev Server in development
-gulp.task('dev:webpack', (done) => {
-    runSequence('build', 'webpack-dev-server', done);
-});
-
-// Running Browser Sync Server in development
-gulp.task('dev:browserSync', (done) => {
-    runSequence('browserSync', done);
+gulp.task('dev', (done) => {
+    runSequence('clean:dist', 'webpack-dev-server', done);
 });
 
 // Building files to distribution folder and then running a test server
