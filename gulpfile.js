@@ -83,7 +83,7 @@ gulp.task('webpack-dev-server', () => {
 		  chunks: true,
 		  chunkModules: true,
         },
-    }).listen(parseInt(process.env.DEV_PORT || 8080, 10), process.env.DEV_HOST || 'localhost', (err) => {
+    }).listen(parseInt(process.env.DEV_PORT, 10) || 8080, process.env.DEV_HOST || 'localhost', (err) => {
         if (err) throw new gutil.PluginError('webpack-dev-server', err);
         gutil.log('[webpack-dev-server]', 'Started on http://localhost:8080');
     });
@@ -98,7 +98,7 @@ gulp.task('browserSync', () => {
         server: {
             baseDir: 'src',
         },
-        port: parseInt(process.env.DEV_PORT || 8080, 10),
+        port: parseInt(process.env.DEV_PORT, 10) || 8080,
         host: process.env.DEV_HOST || 'localhost',
         middleware: [
             webpackHotMiddleware(webpackBundler),
