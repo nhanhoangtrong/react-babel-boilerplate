@@ -2,8 +2,8 @@ var webpack = require('webpack');
 var { resolve } = require('path');
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
 
-var extractCSSTextPlugin = new ExtractTextPlugin('../css/css.css');
-var extractStylusTextPlugin = new ExtractTextPlugin('../css/stylus.css');
+var extractCSSTextPlugin = new ExtractTextPlugin('./css/css.css');
+var extractStylusTextPlugin = new ExtractTextPlugin('./css/stylus.css');
 
 module.exports = {
 	entry: [
@@ -12,8 +12,8 @@ module.exports = {
 	context: resolve(__dirname, 'src'),
 	output: {
 		filename: 'bundle.js',
-		path: resolve(__dirname, 'dist/js'),
-		publicPath: '/js/',
+		path: resolve(__dirname, 'dist/assets'),
+		publicPath: '/assets/',
 	},
 	resolve: {
 	    modules: ['node_modules'],
@@ -49,7 +49,7 @@ module.exports = {
 						'postcss-loader',
 					],
 					fallback: 'style-loader',
-					publicPath: '/css/',
+					publicPath: '/assets/css/',
 				}),
 			},
 			{
@@ -66,7 +66,7 @@ module.exports = {
 					    'stylus-loader',
 					],
 					fallback: 'style-loader',
-					publicPath: '/css/',
+					publicPath: '/assets/css/',
 				}),
 			},
 			{
@@ -75,7 +75,9 @@ module.exports = {
 				    {
 				        loader: 'file-loader',
 				        options: {
-				            name: '../img/[name].[ext]',
+							name: '[path][name].[ext]',
+							// Don't emit file to build folder cause we use gulp to minimize images
+							emitFile: false,
 				        },
 				    },
 				],

@@ -51,8 +51,8 @@ gulp.task('watch:stylus', () => {
 gulp.task('watch:image', () => {
     return watch('src/img/**/*')
 		.pipe(browserSync.stream({
-    once: true,
-}));
+            once: true,
+        }));
 });
 
 // Running a Webpack development server using Webpack Dev Server package
@@ -127,7 +127,7 @@ gulp.task('browserSync', () => {
 gulp.task('build:stylus', () => {
     return gulp.src('src/stylus/**/*.styl')
 		.pipe(stylus().on('error', handlePluginError('build:stylus')))
-		.pipe(gulp.dest('dist/css'));
+        .pipe(gulp.dest('dist/assets/css'));
 });
 
 // Running the Webpack production building
@@ -153,14 +153,14 @@ gulp.task('build:fonts', () => {
     return gulp.src('src/fonts/**/*')
 		.pipe(gutil.noop())
 		// TODO: using another fonts converter for web
-		.pipe(gulp.dest('dist/fonts'));
+        .pipe(gulp.dest('dist/assets/fonts'));
 });
 
 // Minimizing images and then streaming to distribution folder
 gulp.task('build:imagemin', () => {
     return gulp.src('src/img/**/*')
 		.pipe(imagemin().on('error', handlePluginError('build:imagemin')))
-		.pipe(gulp.dest('dist/img'));
+        .pipe(gulp.dest('dist/assets/img'));
 });
 
 // Cleaning files in distribution folder
@@ -188,7 +188,7 @@ gulp.task('server:dist', () => {
 
 // Building files to distribution folder
 gulp.task('build', (done) => {
-    runSequence('clean:dist', ['build:stylus', 'build:webpack', 'build:html', 'build:imagemin', 'build:fonts'], done);
+    runSequence('clean:dist', ['build:webpack', 'build:html', 'build:imagemin', 'build:fonts'], done);
 });
 
 // Running Webpack Dev Server in development

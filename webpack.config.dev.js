@@ -22,8 +22,8 @@ module.exports = {
 	context: path.resolve(__dirname, 'src'),
 	output: {
 		filename: 'bundle.js',
-		path: path.resolve(__dirname, 'dist/js'),
-		publicPath: '/js/'
+		path: path.resolve(__dirname, 'dist/assets'),
+		publicPath: '/assets/'
 	},
 	target: 'web',
 	devtool: 'eval-source-map',
@@ -79,7 +79,7 @@ module.exports = {
 				    {
 				        loader: 'file-loader',
 				        options: {
-				            name: '../img/[name].[ext]',
+							name: '[path][name].[ext]',
 				        },
 				    },
 				],
