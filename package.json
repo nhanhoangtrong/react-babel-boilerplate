@@ -52,7 +52,7 @@
     "babel-eslint": "^7.2.3",
     "babel-loader": "^6.4.1",
     "babel-plugin-transform-object-rest-spread": "^6.26.0",
-    "babel-preset-latest": "^6.24.1",
+    "babel-preset-env": "^1.6.0",
     "babel-preset-react": "^6.24.1",
     "browser-sync": "^2.18.13",
     "css-loader": "^0.25.0",
