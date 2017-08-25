@@ -3,11 +3,11 @@ var { resolve } = require('path');
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 var extractCSSTextPlugin = new ExtractTextPlugin({
-	filename: './css/css.css',
+	filename: 'css/css.css',
 	ignoreOrder: true,
 });
 var extractStylusTextPlugin = new ExtractTextPlugin({
-	filename: './css/style.css',
+	filename: 'css/style.css',
 	ignoreOrder: true,
 });
 
