@@ -4,11 +4,11 @@ var ExtractTextPlugin = require('extract-text-webpack-plugin');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
 
 var extractCSSTextPlugin = new ExtractTextPlugin({
-	filename: 'css/css.css',
+	filename: 'css.css',
 	ignoreOrder: true,
 });
 var extractStylusTextPlugin = new ExtractTextPlugin({
-	filename: 'css/style.css',
+	filename: 'style.css',
 	ignoreOrder: true,
 });
 
@@ -55,7 +55,7 @@ module.exports = {
 						},
 					],
 					fallback: 'style-loader',
-					publicPath: '/assets/css/',
+					publicPath: '/assets/',
 				}),
 			},
 			{
@@ -72,7 +72,7 @@ module.exports = {
 					    'stylus-loader',
 					],
 					fallback: 'style-loader',
-					publicPath: '/assets/css/',
+					publicPath: '/assets/',
 				}),
 			},
 			{
