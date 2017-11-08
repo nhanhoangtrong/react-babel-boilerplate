@@ -4,7 +4,7 @@ var HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
 	entry: [
-		'webpack-dev-server/client?http://localhost:8080',
+		'webpack-dev-server/client',
 
 		'webpack/hot/dev-server',
 		// require for react
