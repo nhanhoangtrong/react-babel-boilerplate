@@ -3,16 +3,26 @@ var webpack = require('webpack');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
-	entry: [
-		'webpack-dev-server/client',
+	entry: {
+		app: [
+			'webpack-dev-server/client',
 
-		'webpack/hot/dev-server',
-		// require for react
-		'react-hot-loader/patch',
+			'webpack/hot/dev-server',
+			// require for react
+			'react-hot-loader/patch',
 
-		'./index.js',
+			'./index.js',
 		// the entry point
-	],
+		],
+		vendors: [
+			'react',
+			'react-dom',
+			'redux',
+			'react-redux',
+			'react-router',
+			'react-router-redux',
+		],
+	},
 	resolve: {
 		modules: ['node_modules'],
 		extensions: ['.js', '.jsx', '.json'],
@@ -22,7 +32,7 @@ module.exports = {
 	},
 	context: path.resolve(__dirname, 'src'),
 	output: {
-		filename: 'bundle.js',
+		filename: '[name].bundle.js',
 		path: path.resolve(__dirname, 'dist/assets'),
 		publicPath: '/assets/'
 	},
@@ -104,6 +114,11 @@ module.exports = {
 		new webpack.DefinePlugin({
 			'process.env.NODE_ENV': JSON.stringify('development'),
 			__DEV__: true
+		}),
+		new webpack.optimize.CommonsChunkPlugin({
+			name: 'vendors',
+			filename: 'vendors.client.js',
+			minChunks: Infinity,
 		}),
 		new HtmlWebpackPlugin({
 			template: path.resolve(__dirname, 'src/index.ejs'),
