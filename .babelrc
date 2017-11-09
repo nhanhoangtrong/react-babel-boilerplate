@@ -2,7 +2,8 @@
   "presets": [
     ["env", {"modules": false}],
     "react"
-  ],
+	],
+	"compact": true,
   "env": {
   	"development": {
   		"plugins": [
