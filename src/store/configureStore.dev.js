@@ -2,20 +2,11 @@ import { createStore } from 'redux';
 import rootReducer from '../reducers';
 import enhancer from './enhancer';
 
-// const createStoreWithMiddleware = compose(
-// 	persistState(getDebugSessionKey());
-// )(createStore)
-
-function getDebugSessionKey() {
-    const matches = window.location.href.match(/[?&]debug_session=([^&]+)\b/);
-    return (matches && matches.length > 0) ? matches[1] : null;
-}
-
 export default function configureStore(initialState) {
     /* eslint-disable no-underscore-dangle */
-    const createEnhancedStore = window.__REDUX_DEVTOOLS_EXTENSION__ ? enhancer(window.__REDUX_DEVTOOLS_EXTENSION__) : enhancer;
+    const createEnhancedStore = window.__REDUX_DEVTOOLS_EXTENSION__ ? window.__REDUX_DEVTOOLS_EXTENSION__()(createStore) : createStore;
 
-    const store = createEnhancedStore(rootReducer, initialState);
+    const store = enhancer(createEnhancedStore)(rootReducer, initialState);
     /* eslint-enable */
 
     if (module.hot) {

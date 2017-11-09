@@ -1,5 +1,1 @@
-if (process.env.NODE_ENV === 'production') {
-    module.exports = require('./configureStore.prod').default;
-} else {
-    module.exports = require('./configureStore.dev').default;
-}
+module.exports = process.env.NODE_ENV === 'development' ? require('./configureStore.dev') : require('./configureStore.prod');
