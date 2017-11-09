@@ -12,13 +12,9 @@ const runSequence = require('run-sequence');
 const browserSync = require('browser-sync').create();
 
 const webpack = require('webpack');
-const webpackDevConfig = require('./webpack.config.dev');
-const webpackProdConfig = require('./webpack.config.prod');
+const webpackConfig = require('./webpack.config');
 
 const WebpackDevServer = require('webpack-dev-server');
-
-const webpackDevMiddleware = require('webpack-dev-middleware');
-const webpackHotMiddleware = require('webpack-hot-middleware');
 
 const dotenv = require('dotenv');
 
@@ -49,38 +45,9 @@ gulp.task('watch:stylus', () => {
 
 // Running a Webpack development server using Webpack Dev Server package
 gulp.task('webpack-dev-server', () => {
-    const config = Object.create(webpackDevConfig);
-    config.entry[0] = 'webpack-dev-server/client?http://localhost:' + (process.env.DEV_PORT || 8080);
+    const config = Object.create(webpackConfig);
 
-    new WebpackDevServer(webpack(config), {
-        contentBase: './dist',
-        publicPath: config.output.publicPath,
-        open: true,
-        openPage: '/',
-        hot: true,
-        inline: true,
-        historyApiFallback: {
-            index: config.output.publicPath,
-            rewrites: {
-                from: /./, to: config.output.publicPath,
-            },
-        },
-        // It suppress error shown in console, so it has to be set to false.
-        quiet: false,
-        // It suppress everything except error, so it has to be set to false as well
-        // to see success build.
-        noInfo: false,
-        stats: {
-		  // Config for minimal console.log mess.
-		  assets: true,
-		  colors: true,
-		  version: false,
-		  hash: false,
-		  timings: true,
-		  chunks: false,
-		  chunkModules: false,
-        },
-    }).listen(parseInt(process.env.DEV_PORT, 10) || 8080, process.env.DEV_HOST || 'localhost', (err) => {
+    new WebpackDevServer(webpack(config), config.devServer).listen(parseInt(process.env.DEV_PORT, 10) || 8080, process.env.DEV_HOST || 'localhost', (err) => {
         if (err) throw new gutil.PluginError('webpack-dev-server', err);
         gutil.log('[webpack-dev-server]', 'Started on http://' + process.env.DEV_HOST + ':' + process.env.DEV_PORT);
     });
@@ -99,7 +66,7 @@ gulp.task('build:stylus', () => {
 
 // Running the Webpack production building
 gulp.task('build:webpack', (done) => {
-    const config = Object.create(webpackProdConfig);
+    const config = Object.create(webpackConfig);
     webpack(config, (err, stats) => {
         if (err) {
             throw new gutil.PluginError('[build:webpack]', err);
