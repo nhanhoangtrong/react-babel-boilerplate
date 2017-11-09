@@ -10,11 +10,11 @@ export default class Root extends Component {
     render() {
         const { store, history } = this.props;
         return (
-			<Provider store={store}>
-				<Router key={Math.random()} history={history}>
-					{routes}
-				</Router>
-			</Provider>
+            <Provider store={store}>
+                <Router key={Math.random()} history={history}>
+                    {routes}
+                </Router>
+            </Provider>
         );
     }
 }

@@ -12,14 +12,14 @@ function getDebugSessionKey() {
 }
 
 export default function configureStore(initialState) {
-	/* eslint-disable no-underscore-dangle */
+    /* eslint-disable no-underscore-dangle */
     const createEnhancedStore = window.__REDUX_DEVTOOLS_EXTENSION__ ? enhancer(window.__REDUX_DEVTOOLS_EXTENSION__) : enhancer;
 
     const store = createEnhancedStore(rootReducer, initialState);
-	/* eslint-enable */
+    /* eslint-enable */
 
     if (module.hot) {
-		// Enable Webpack for HMR for reducers
+        // Enable Webpack for HMR for reducers
         module.hot.accept('../reducers', () => {
             const nextReducer = require('../reducers/index').default;
             store.replaceReducer(nextReducer);
