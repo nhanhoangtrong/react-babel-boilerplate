@@ -27,7 +27,7 @@ dotenv.config({path: path.resolve(__dirname, '.env')});
 
 // Gulp plugin errors logging
 const handlePluginError = (pluginName) => {
-    return function(err) {
+    return function errorHandler(err) {
         gutil.log(gutil.colors.yellow(pluginName), gutil.colors.red(err.message));
         this.emit('end');
     };
@@ -40,11 +40,11 @@ const handlePluginError = (pluginName) => {
 // Building stylus task for watching in development
 gulp.task('watch:stylus', () => {
     return watch('src/stylus/**/*.styl')
-		.pipe(stylus().on('error', handlePluginError('watch:stylus')))
-		.pipe(gulp.dest('src/css'))
-		.pipe(browserSync.stream({
-    once: true,
-}));
+        .pipe(stylus().on('error', handlePluginError('watch:stylus')))
+        .pipe(gulp.dest('src/css'))
+        .pipe(browserSync.stream({
+            once: true,
+        }));
 });
 
 // Running a Webpack development server using Webpack Dev Server package
@@ -65,10 +65,10 @@ gulp.task('webpack-dev-server', () => {
                 from: /./, to: config.output.publicPath,
             },
         },
-		// It suppress error shown in console, so it has to be set to false.
+        // It suppress error shown in console, so it has to be set to false.
         quiet: false,
-		// It suppress everything except error, so it has to be set to false as well
-		// to see success build.
+        // It suppress everything except error, so it has to be set to false as well
+        // to see success build.
         noInfo: false,
         stats: {
 		  // Config for minimal console.log mess.
@@ -77,8 +77,8 @@ gulp.task('webpack-dev-server', () => {
 		  version: false,
 		  hash: false,
 		  timings: true,
-		  chunks: true,
-		  chunkModules: true,
+		  chunks: false,
+		  chunkModules: false,
         },
     }).listen(parseInt(process.env.DEV_PORT, 10) || 8080, process.env.DEV_HOST || 'localhost', (err) => {
         if (err) throw new gutil.PluginError('webpack-dev-server', err);
@@ -93,7 +93,7 @@ gulp.task('webpack-dev-server', () => {
 // Building Stylus files into CSS files
 gulp.task('build:stylus', () => {
     return gulp.src('src/stylus/**/*.styl')
-		.pipe(stylus().on('error', handlePluginError('build:stylus')))
+        .pipe(stylus().on('error', handlePluginError('build:stylus')))
         .pipe(gulp.dest('dist/assets/css'));
 });
 
