@@ -1,8 +1,8 @@
 import { combineReducers } from 'redux';
 import { routerReducer as routing } from 'react-router-redux';
-import globals from './globals';
+import sampleApp from '@app/containers/SampleApp/reducer';
 
 export default combineReducers({
-    globals,
-    routing
+    sampleApp,
+    routing,
 });

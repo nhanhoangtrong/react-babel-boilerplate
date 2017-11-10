@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import styles from '@app/stylus/main.styl';
+import styles from './App.styl';
 import { IndexLink, Link } from 'react-router';
 
 const App = ({ children }) => (

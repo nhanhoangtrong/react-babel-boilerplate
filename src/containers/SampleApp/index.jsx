@@ -1,10 +1,10 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { showMain, hideMain } from '@app/actions/globals';
+import { showMain, hideMain } from './actions';
 import SamplePresentation from '@app/components/SamplePresentation';
 
 const mapStateToProps = (state) => ({
-    isShownText: state.globals.get('isShownMain'),
+    isShownText: state.sampleApp.get('isShownMain'),
 });
 
 const mapDispatchToProps = (dispatch) => ({

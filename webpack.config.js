@@ -34,7 +34,7 @@ const defaultPlugins = [
     new HtmlWebpackPlugin({
         filename: isDev ? 'index.html' : '../index.html',
         title: isDev ? 'Development' : 'Production',
-        template: resolve(__dirname, 'src/index.ejs'),
+        template: resolve(__dirname, 'src/template.ejs'),
     }),
 ];
 

@@ -1,4 +1,4 @@
-import { GLOBAL_HIDE_MAIN, GLOBAL_SHOW_MAIN } from '../types';
+import { GLOBAL_HIDE_MAIN, GLOBAL_SHOW_MAIN } from './constants';
 
 export function showMain() {
     return {

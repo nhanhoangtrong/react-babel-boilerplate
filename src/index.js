@@ -1,4 +1,6 @@
 import injectFastclick from 'react-fastclick';
+import './index.styl';
+
 injectFastclick();
 
 if (process.env.NODE_ENV === 'development') {

@@ -1,5 +1,5 @@
 import { createStore } from 'redux';
-import rootReducer from '../reducers';
+import rootReducer from './rootReducer';
 import enhancer from './enhancer';
 
 export default function configureStore(initialState) {
@@ -11,8 +11,8 @@ export default function configureStore(initialState) {
 
     if (module.hot) {
         // Enable Webpack for HMR for reducers
-        module.hot.accept('../reducers', () => {
-            const nextReducer = require('../reducers/index').default;
+        module.hot.accept('./rootReducer', () => {
+            const nextReducer = require('./rootReducer').default;
             store.replaceReducer(nextReducer);
         });
     }

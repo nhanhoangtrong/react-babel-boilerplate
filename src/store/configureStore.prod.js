@@ -1,5 +1,5 @@
 import { createStore } from 'redux';
-import rootReducer from '@app/reducers';
+import rootReducer from './rootReducer';
 import enhancer from './enhancer';
 
 export default function configureStore(initialState) {
