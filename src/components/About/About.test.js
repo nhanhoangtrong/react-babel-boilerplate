@@ -1,9 +1,7 @@
 import React from 'react';
 import About from './index';
-import renderer from 'react-test-renderer';
+import { shallow } from 'enzyme';
 
 test('Test About component', () => {
-    const component = renderer.create(<About />);
-    const tree = component.toJSON();
-    expect(tree.type).toBe('h3');
+    shallow(<About />);
 });

@@ -32,6 +32,7 @@
   },
   "homepage": "https://github.com/nhanhoangtrong/kendy-react-babel-boilerplate#readme",
   "dependencies": {
+    "babel-polyfill": "^6.26.0",
     "classnames": "^2.2.5",
     "immutable": "^3.8.2",
     "lodash": "^4.17.4",
@@ -74,6 +75,7 @@
     "path-is-inside": "^1.0.2",
     "postcss": "^6.0.14",
     "postcss-loader": "^2.0.8",
+    "raf": "^3.4.0",
     "react-hot-loader": "^3.1.2",
     "react-test-renderer": "^16.1.0",
     "regenerator-runtime": "^0.11.0",
@@ -85,6 +87,7 @@
     "webpack-dev-server": "^2.9.4"
   },
   "jest": {
+    "setupTestFrameworkScriptFile": "<rootDir>/setupTests.js",
     "moduleFileExtensions": [
       "js",
       "jsx"

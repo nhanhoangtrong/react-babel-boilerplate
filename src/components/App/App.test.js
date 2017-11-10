@@ -1,7 +1,7 @@
 import React from 'react';
 import App from './index';
-import renderer from 'react-test-renderer';
+import { shallow } from 'enzyme';
 
 test('Test App Component', () => {
-    expect(renderer.create(<App><p>Hello</p></App>).toJSON().type).toBe('div');
+    shallow(<App><p>Hello World!</p></App>);
 });
