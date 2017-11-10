@@ -1,3 +1,4 @@
+import 'babel-polyfill';
 import injectFastclick from 'react-fastclick';
 import './index.styl';
 
