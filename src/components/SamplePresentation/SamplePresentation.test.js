@@ -1,6 +1,6 @@
 import React from 'react';
 import renderer from 'react-test-renderer';
-import SamplePresentation from './SamplePresentation';
+import SamplePresentation from './index';
 
 test('Test SamplePresentation', () => {
     const component = renderer.create(<SamplePresentation isShownText onClickToggleText={() => {}}/>);
