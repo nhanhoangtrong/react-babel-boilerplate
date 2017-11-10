@@ -99,6 +99,7 @@ module.exports = {
                     'react-hot-loader/webpack',
                     'babel-loader',
                 ],
+                exclude: /node_modules/,
             },
             {
                 test: /\.jsx?$/,
@@ -110,6 +111,7 @@ module.exports = {
                         failOnError: true,
                     },
                 },
+                exclude: /node_modules/,
             },
             {
                 test: /\.css$/,
@@ -122,6 +124,15 @@ module.exports = {
                                 modules: false,
                                 sourceMap: isDev,
                                 importLoaders: 1,
+                            },
+                        },
+                        {
+                            loader: 'postcss-loader',
+                            options : {
+                                ident: 'postcss',
+                                plugins: (loader) => [
+                                    require('postcss-cssnext')(),
+                                ],
                             },
                         },
                     ],
