@@ -35,6 +35,7 @@
   },
   "extends": "eslint:recommended",
   "rules": {
+    "semi": ["error", "always"],
     "no-unused-vars": [1, {          // http://eslint.org/docs/rules/no-unused-vars
       "vars": "local",
       "args": "after-used"
