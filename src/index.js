@@ -1,4 +1,4 @@
-import 'babel-polyfill';
+import 'normalize.css/normalize.css';
 import injectFastclick from 'react-fastclick';
 import './index.styl';
 

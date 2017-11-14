@@ -4,14 +4,16 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 const isDev = process.env.NODE_ENV === 'development';
+const isAnalyzing = process.env.ANALYZING === 'true';
 
+// Initialize ExtractTextPlugin with two options
 const extractCSSTextPlugin = new ExtractTextPlugin({
-    filename: 'css.css',
+    filename: '[md5:contenthash:hex:16].css',
     ignoreOrder: true,
     disable: isDev,
 });
 const extractStylusTextPlugin = new ExtractTextPlugin({
-    filename: 'stylus.css',
+    filename: '[md5:contenthash:hex:16].css',
     ignoreOrder: true,
     disable: isDev,
 });
@@ -19,7 +21,7 @@ const extractStylusTextPlugin = new ExtractTextPlugin({
 const srcDir = resolve(__dirname, 'src');
 const publicPath = '/assets/';
 
-const defaultPlugins = [
+const basePlugins = [
     new webpack.DefinePlugin({
         'process.env.NODE_ENV': JSON.stringify(isDev ? 'development' : 'production'),
         __DEV__: isDev,
@@ -27,25 +29,59 @@ const defaultPlugins = [
     extractCSSTextPlugin,
     extractStylusTextPlugin,
     new webpack.optimize.CommonsChunkPlugin({
-        name: 'vendors',
-        filename: 'vendors.bundle.js',
-        minChunks: Infinity,
+        name: 'commons',
+        filename: '[name].bundle.js',
+        minChunks: 2,
     }),
     new HtmlWebpackPlugin({
         filename: isDev ? 'index.html' : '../index.html',
         title: isDev ? 'Development' : 'Production',
         template: resolve(__dirname, 'src/template.ejs'),
+        minify: isDev ? false : {
+            removeComments: true,
+            collapseWhitespace: true,
+            removeRedundantAttributes: true,
+            useShortDoctype: true,
+            removeEmptyAttributes: true,
+            removeStyleLinkTypeAttributes: true,
+            keepClosingSlash: true,
+            minifyJS: true,
+            minifyCSS: true,
+            minifyURLs: true,
+        },
     }),
 ];
 
-const devPlugins = [
-    new webpack.HotModuleReplacementPlugin(),
-    new webpack.NamedModulesPlugin(),
-];
+let plugins;
+if (isDev) {
+    const devPlugins = [
+        new webpack.HotModuleReplacementPlugin(),
+        new webpack.NamedModulesPlugin(),
+    ];
+    plugins = devPlugins.concat(basePlugins);
+} else {
+    const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
+    const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 
-const prodPlugins = [
-    new webpack.optimize.UglifyJsPlugin(),
-];
+    const prodPlugins = [
+        new UglifyJsPlugin({
+            uglifyOptions: {
+                compress: {
+                    warnings: false,
+                    comparisons: false,
+                },
+                output: {
+                    comments: false,
+                },
+            },
+            sourceMap: false,
+        }),
+    ];
+    if (isAnalyzing) {
+        prodPlugins.push(new BundleAnalyzerPlugin());
+    }
+    plugins = prodPlugins.concat(basePlugins);
+}
 
 module.exports = {
     entry: {
@@ -53,7 +89,7 @@ module.exports = {
             'react-hot-loader/patch',
             './index.js',
         ] : './index.js',
-        vendors: [
+        commons: [
             'react',
             'react-dom',
             'redux',
@@ -61,8 +97,6 @@ module.exports = {
             'react-redux',
             'react-router',
             'react-router-redux',
-            'lodash',
-            'immutable',
         ],
     },
     resolve: {
@@ -74,11 +108,12 @@ module.exports = {
     context: srcDir,
     output: {
         filename: '[name].bundle.js',
+        chunkFilename: '[name].chunk.js',
         path: resolve(__dirname, join('dist', publicPath)),
         publicPath,
     },
     target: 'web',
-    devtool: isDev ? 'eval-source-map' : 'source-map',
+    devtool: isDev ? 'cheap-module-eval-source-map' : false,
     devServer: {
         contentBase: './dist',
         publicPath: publicPath,
@@ -96,8 +131,12 @@ module.exports = {
             {
                 test: /\.jsx?$/,
                 use: [
-                    'react-hot-loader/webpack',
-                    'babel-loader',
+                    {
+                        loader: 'babel-loader',
+                        options: {
+                            cacheDirectory: isDev,
+                        },
+                    },
                 ],
                 exclude: /node_modules/,
             },
@@ -108,20 +147,29 @@ module.exports = {
                     loader: 'eslint-loader',
                     options: {
                         quiet: isDev,
-                        failOnError: true,
+                        cache: isDev,
                     },
                 },
                 exclude: /node_modules/,
             },
             {
                 test: /\.css$/,
+                include: /node_modules/,
+                use: [
+                    'style-loader',
+                    'css-loader',
+                ],
+            },
+            {
+                test: /\.css$/,
+                exclude: /node_modules/,
                 use: extractCSSTextPlugin.extract({
                     fallback: 'style-loader',
                     use: [
                         {
                             loader: 'css-loader',
                             options: {
-                                modules: false,
+                                modules: true,
                                 sourceMap: isDev,
                                 importLoaders: 1,
                             },
@@ -167,5 +215,8 @@ module.exports = {
             },
         ],
     },
-    plugins: Array.from(isDev ? devPlugins : prodPlugins).concat(defaultPlugins),
+    performance: {
+        hints: isDev ? false : "warning",
+    },
+    plugins,
 };

@@ -1,24 +1,40 @@
 {
+	// Default Production transform
   "presets": [
-    ["env", {"modules": false}],
+    ["env", {
+			"modules": false,
+			"targets": {
+				"browsers": ["last 2 versions"]
+			},
+			"useBuiltIns": "usage"
+		}],
     "react"
 	],
+	"plugins": [
+		"transform-object-rest-spread",
+		"syntax-dynamic-import"
+	],
 	"compact": true,
+	// Specific environments transformation config
   "env": {
   	"development": {
-  		"plugins": [
-		    "transform-object-rest-spread"
-		  ]
+			"presets": [
+				["env", {
+					"modules": false,
+					"targets": {
+						"chrome": 58
+					},
+					"debug": true,
+					"useBuiltIns": "usage"
+				}],
+				"react"
+			]
   	},
-  	"production": {
-  		"plugins": [
-  			"transform-object-rest-spread"
-  		]
-		},
 		"test": {
 			"plugins": [
 				"transform-object-rest-spread",
-				"transform-es2015-modules-commonjs"
+				"transform-es2015-modules-commonjs",
+				"syntax-dynamic-import"
 			]
 		}
   }
