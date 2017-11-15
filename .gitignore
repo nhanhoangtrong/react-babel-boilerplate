@@ -2,6 +2,7 @@
 
 # Build folder
 dist
+build
 
 # Build CSS and JS
 src/css
