@@ -34,7 +34,6 @@
   "homepage": "https://github.com/nhanhoangtrong/kendy-react-babel-boilerplate#readme",
   "dependencies": {
     "classnames": "^2.2.5",
-    "font-awesome": "^4.7.0",
     "immutable": "^3.8.2",
     "lodash": "^4.17.4",
     "normalize.css": "^7.0.0",
