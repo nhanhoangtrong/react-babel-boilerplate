@@ -271,6 +271,7 @@ module.exports = {
                                 ident: 'postcss',
                                 plugins: (loader) => [
                                     require('postcss-cssnext')(),
+                                    require('postcss-autoreset')(),
                                 ],
                             },
                         },
@@ -305,7 +306,7 @@ module.exports = {
                 use: {
                     loader: 'file-loader',
                     options: {
-                        name: '[path][name].[ext]',
+                        name: `media/[name].[hash:16].[ext]`,
                     },
                 },
             },

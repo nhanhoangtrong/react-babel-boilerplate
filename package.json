@@ -9,7 +9,7 @@
     "build": "cross-env NODE_ENV=production webpack --progress",
     "dev": "cross-env NODE_ENV=development webpack-dev-server --progress",
     "analyzer": "cross-env ANALYZING=true npm run build",
-    "lint": "eslint --ext .jsx --ext .js --fix src",
+    "lint": "eslint --ext .jsx --ext .js --fix .",
     "test": "jest",
     "coverage": "jest --coverage"
   },
@@ -34,6 +34,7 @@
   "homepage": "https://github.com/nhanhoangtrong/kendy-react-babel-boilerplate#readme",
   "dependencies": {
     "classnames": "^2.2.5",
+    "font-awesome": "^4.7.0",
     "immutable": "^3.8.2",
     "lodash": "^4.17.4",
     "normalize.css": "^7.0.0",
@@ -78,6 +79,7 @@
     "nib": "^1.1.2",
     "path-is-inside": "^1.0.2",
     "postcss": "^6.0.14",
+    "postcss-autoreset": "^2.0.1",
     "postcss-cssnext": "^3.0.2",
     "postcss-loader": "^2.0.8",
     "raf": "^3.4.0",
