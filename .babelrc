@@ -12,7 +12,8 @@
 	],
 	"plugins": [
 		"transform-object-rest-spread",
-		"syntax-dynamic-import"
+		"syntax-dynamic-import",
+		"transform-class-properties"
 	],
 	"compact": true,
 	// Specific environments transformation config
@@ -35,6 +36,8 @@
 				"transform-object-rest-spread",
 				"transform-es2015-modules-commonjs",
 				"syntax-dynamic-import"
+				,
+				"transform-class-properties"
 			]
 		}
   }
