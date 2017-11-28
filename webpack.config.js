@@ -263,6 +263,7 @@ module.exports = {
                                 sourceMap: isDev,
                                 importLoaders: 1,
                                 minimize: !isDev,
+                                localIdentName: '[path][name]__[local]--[hash:base64:5]',
                             },
                         },
                         {
@@ -292,7 +293,7 @@ module.exports = {
                                 modules: true,
                                 sourceMap: isDev,
                                 importLoaders: 1,
-                                localIndentName: '[name]_[local]',
+                                localIdentName: '[path][name]__[local]--[hash:base64:5]',
                                 minimize: !isDev,
                             },
                         },
