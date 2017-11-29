@@ -9,7 +9,7 @@ const render = (RootComponent) => {
         <AppContainer>
             <RootComponent store={store} history={syncHistory} />
         </AppContainer>,
-        document.getElementById('app')
+        document.getElementById('root')
     );
 };
 
