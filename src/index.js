@@ -1,7 +1,6 @@
 import 'normalize.css/normalize.css';
 import 'sanitize.css/sanitize.css';
 import injectFastclick from 'react-fastclick';
-import './index.styl';
 
 injectFastclick();
 
