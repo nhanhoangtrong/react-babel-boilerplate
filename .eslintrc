@@ -33,7 +33,7 @@
       "jsx": true
     }
   },
-  "extends": "eslint:recommended",
+  "extends": ["eslint:recommended", "plugin:react/recommended"],
   "rules": {
     "semi": ["error", "always"],
     "no-unused-vars": [1, {          // http://eslint.org/docs/rules/no-unused-vars
