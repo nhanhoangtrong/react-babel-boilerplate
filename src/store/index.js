@@ -5,21 +5,34 @@ import configureStore from './configureStore';
 import storage from '@app/libs/storage';
 import { APP_STORAGE } from '@app/globals';
 
-export function serialize(state) {
+/**
+ * Serialize a immutable object to JS Object for saving into local storage
+ *
+ * @param {object} immutableState
+ * @param {object} serializedState
+ */
+export function serialize(immutableState) {
     const serializedState = {};
 
-    Object.keys(state || {}).forEach( k => {
-        serializedState[k] = state[k].toJS ? state[k].toJS() : state[k];
+    Object.keys(immutableState || {}).forEach( k => {
+        serializedState[k] = immutableState[k].toJS ? immutableState[k].toJS() : immutableState[k];
     });
 
     return serializedState;
 }
 
-export function deserialize(state) {
+/**
+ * Deserialize JS Object into an immutable object
+ *
+ * @param {object} objectState
+ * @param {boolean} immutable
+ * @returns {object}
+ */
+export function deserialize(objectState, immutable) {
     const deserializedState = {};
 
-    Object.keys(state || {}).forEach( k => {
-        deserializedState[k] = fromJS(state[k]);
+    Object.keys(objectState || {}).forEach( k => {
+        deserializedState[k] = fromJS(objectState[k]);
     });
 
     return deserializedState;

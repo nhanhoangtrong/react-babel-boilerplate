@@ -1,4 +1,4 @@
-export default {
+const storage = {
     get: (key) => {
         try {
             return JSON.parse(localStorage.getItem(key));
@@ -10,3 +10,9 @@ export default {
         localStorage.setItem(key, JSON.stringify(value));
     },
 };
+
+if (__DEV__) {
+    storage.set('debug', true);
+}
+
+export default storage;
