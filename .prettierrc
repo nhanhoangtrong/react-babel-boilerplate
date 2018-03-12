@@ -10,7 +10,7 @@
   "arrowParens": "always",
   "overrides": [
     {
-      "files": ["*.json", ".prettierrc"],
+      "files": ["*.json", ".prettierrc", ".babelrc", ".eslintrc"],
       "options": {
         "parser": "json",
         "tabWidth": 2
