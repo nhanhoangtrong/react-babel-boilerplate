@@ -39,7 +39,9 @@ const basePlugins = [
     // This plugin allows us define some important constants
     new webpack.DefinePlugin({
         // Because React need the NODE_ENV in each stage
-        'process.env.NODE_ENV': JSON.stringify(isDev ? 'development' : 'production'),
+        'process.env.NODE_ENV': JSON.stringify(
+            isDev ? 'development' : 'production'
+        ),
         // Webpack constant, good for loading specific modules
         __DEV__: isDev,
     }),
@@ -72,18 +74,20 @@ const basePlugins = [
         inject: true,
         // Minify config on production only, parsing an html-minifier config object
         // in production or disable in development
-        minify: isDev ? false : {
-            removeComments: true,
-            collapseWhitespace: true,
-            removeRedundantAttributes: true,
-            useShortDoctype: true,
-            removeEmptyAttributes: true,
-            removeStyleLinkTypeAttributes: true,
-            keepClosingSlash: true,
-            minifyJS: true,
-            minifyCSS: true,
-            minifyURLs: true,
-        },
+        minify: isDev
+            ? false
+            : {
+                  removeComments: true,
+                  collapseWhitespace: true,
+                  removeRedundantAttributes: true,
+                  useShortDoctype: true,
+                  removeEmptyAttributes: true,
+                  removeStyleLinkTypeAttributes: true,
+                  keepClosingSlash: true,
+                  minifyJS: true,
+                  minifyCSS: true,
+                  minifyURLs: true,
+              },
     }),
 ];
 
@@ -137,17 +141,15 @@ if (isDev) {
 }
 if (isAnalyzing) {
     // If ANALYZING is true, push a BundleAnalyzerPlugin at the end of plugins list
-    const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
+    const BundleAnalyzerPlugin = require('webpack-bundle-analyzer')
+        .BundleAnalyzerPlugin;
     plugins.push(new BundleAnalyzerPlugin());
 }
 
 module.exports = {
     entry: {
         // The main entry load from react-hot-loader/patch in development
-        app: isDev ? [
-            'react-hot-loader/patch',
-            './index.js',
-        ] : './index.js',
+        app: isDev ? ['react-hot-loader/patch', './index.js'] : './index.js',
         // This bundle include all common packages using in other bundles
         commons: [
             'react',
@@ -195,7 +197,8 @@ module.exports = {
         historyApiFallback: {
             index: publicPath,
             rewrites: {
-                from: /./, to: publicPath,
+                from: /./,
+                to: publicPath,
             },
         },
     },
@@ -264,12 +267,13 @@ module.exports = {
                                 sourceMap: isDev,
                                 importLoaders: 1,
                                 minimize: !isDev,
-                                localIdentName: '[path][name]__[local]--[hash:base64:5]',
+                                localIdentName:
+                                    '[path][name]__[local]--[hash:base64:5]',
                             },
                         },
                         {
                             loader: 'postcss-loader',
-                            options : {
+                            options: {
                                 ident: 'postcss',
                                 plugins: (loader) => [
                                     require('postcss-cssnext')(),
@@ -294,7 +298,8 @@ module.exports = {
                                 modules: true,
                                 sourceMap: isDev,
                                 importLoaders: 1,
-                                localIdentName: '[path][name]__[local]--[hash:base64:5]',
+                                localIdentName:
+                                    '[path][name]__[local]--[hash:base64:5]',
                                 minimize: !isDev,
                             },
                         },
@@ -318,7 +323,7 @@ module.exports = {
     // by default the maxEntrypointSize is 250kB
     performance: {
         // Only show the warning on production build
-        hints: isDev ? false : "warning",
+        hints: isDev ? false : 'warning',
     },
     // Include all defined plugins
     plugins,

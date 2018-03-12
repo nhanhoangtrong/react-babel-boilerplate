@@ -31,7 +31,7 @@ module.exports = {
         new CleanWebpackPlugin(dllDir),
         // Define development env for React debug
         new webpack.DefinePlugin({
-            "process.env.NODE_ENV": JSON.stringify('development'),
+            'process.env.NODE_ENV': JSON.stringify('development'),
         }),
         // Finally, configure the DllPlugin to output the dll manifest file in dll folder
         new webpack.DllPlugin({
