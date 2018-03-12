@@ -3,5 +3,6 @@ import About from './index';
 import { shallow } from 'enzyme';
 
 test('Test About component', () => {
-    shallow(<About />);
+    const wrapper = shallow(<About />);
+    expect(wrapper.find('div').length).toEqual(1);
 });

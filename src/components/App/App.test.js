@@ -3,5 +3,10 @@ import App from './index';
 import { shallow } from 'enzyme';
 
 test('Test App Component', () => {
-    shallow(<App><p>Hello World!</p></App>);
+    const wrapper = shallow(
+        <App>
+            <p>Hello World!</p>
+        </App>
+    );
+    expect(wrapper.contains(<p>Hello World!</p>)).toBeTruthy();
 });
