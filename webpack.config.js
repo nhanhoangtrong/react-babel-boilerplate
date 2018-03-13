@@ -68,6 +68,7 @@ const basePlugins = [
         filename: isDev ? 'index.html' : '../index.html',
         // Config the title for generated HTML
         title: isDev ? 'Development' : 'Production',
+        description: '',
         // Path to the template, we can using ejs template with no configurations
         template: resolve(__dirname, 'src/template.ejs'),
         // Inject all bundles into the template, all javascript will be placed
