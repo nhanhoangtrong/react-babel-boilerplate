@@ -5,6 +5,8 @@ const CleanWebpackPlugin = require('clean-webpack-plugin');
 const dllDir = resolve(__dirname, 'build');
 
 module.exports = {
+    mode: 'development',
+    target: 'web',
     // This entry includes a list of all packages need to bundle as dll
     entry: [
         'react',

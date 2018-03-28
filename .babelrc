@@ -1,43 +1,50 @@
 {
-	// Default Production transform
+  // Default Production transform
   "presets": [
-    ["env", {
-			"modules": false,
-			"targets": {
-				"browsers": ["last 2 versions"]
-			},
-			"useBuiltIns": "usage"
-		}],
+    [
+      "env",
+      {
+        "modules": false,
+        "targets": {
+          "browsers": ["last 2 versions"]
+        },
+        "useBuiltIns": "usage"
+      }
+    ],
     "react"
-	],
-	"plugins": [
-		"transform-object-rest-spread",
-		"syntax-dynamic-import",
-		"transform-class-properties"
-	],
-	"compact": true,
-	// Specific environments transformation config
+  ],
+  "plugins": [
+    "react-hot-loader/babel",
+    "transform-object-rest-spread",
+    "syntax-dynamic-import",
+    "transform-class-properties"
+  ],
+  "compact": true,
+  // Specific environments transformation config
   "env": {
-  	"development": {
-			"presets": [
-				["env", {
-					"modules": false,
-					"targets": {
-						"chrome": 58
-					},
-					"debug": true,
-					"useBuiltIns": "usage"
-				}],
-				"react"
-			]
-  	},
-		"test": {
-			"plugins": [
-				"transform-object-rest-spread",
-				"transform-es2015-modules-commonjs",
-				"syntax-dynamic-import",
-				"transform-class-properties"
-			]
-		}
+    "development": {
+      "presets": [
+        [
+          "env",
+          {
+            "modules": false,
+            "targets": {
+              "chrome": 58
+            },
+            "debug": true,
+            "useBuiltIns": "usage"
+          }
+        ],
+        "react"
+      ]
+    },
+    "test": {
+      "plugins": [
+        "transform-object-rest-spread",
+        "transform-es2015-modules-commonjs",
+        "syntax-dynamic-import",
+        "transform-class-properties"
+      ]
+    }
   }
 }

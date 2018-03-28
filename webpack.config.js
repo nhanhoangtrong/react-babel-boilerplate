@@ -6,8 +6,8 @@ const CleanWebpackPlugin = require('clean-webpack-plugin');
 
 // First, we need to check the environment constants
 // include NODE_ENV and ANALYZING
-const isDev = process.env.NODE_ENV === 'development';
-const isAnalyzing = process.env.ANALYZING === 'true';
+const DEV = process.env.NODE_ENV === 'development';
+const ANALYZING = process.env.ANALYZING === 'true';
 
 // Then we initialize ExtractTextPlugin with two instances
 // The first one is use for extracting CSS text, and the second
@@ -16,22 +16,22 @@ const isAnalyzing = process.env.ANALYZING === 'true';
 const extractCSSTextPlugin = new ExtractTextPlugin({
     filename: '[md5:contenthash:hex:16].css',
     ignoreOrder: true,
-    disable: isDev,
+    disable: DEV,
 });
 const extractStylusTextPlugin = new ExtractTextPlugin({
     filename: '[md5:contenthash:hex:16].css',
     ignoreOrder: true,
-    disable: isDev,
+    disable: DEV,
 });
 
 // Next, we need to define the source directory for webpack context
-const srcDir = resolve(__dirname, 'src');
+const SOURCE_DIR = resolve(__dirname, 'src');
 // the dll folder that contained pre-built dlls
-const dllDir = resolve(__dirname, 'build');
+const DLL_DIR = resolve(__dirname, 'build');
 // the public path of bundled files
-const publicPath = '/assets/';
+const PUBLIC_PATH = '/assets/';
 // and filename's prefix of output files
-const outputPrefix = isDev ? '[name]' : '[name].[chunkhash:8]';
+const OUTPUT_PREFIX = DEV ? '[name]' : '[name].[chunkhash:8]';
 
 const basePlugins = [
     // First clean the ./dist forlder using CleanWebpackPlugin
@@ -40,23 +40,16 @@ const basePlugins = [
     new webpack.DefinePlugin({
         // Because React need the NODE_ENV in each stage
         'process.env.NODE_ENV': JSON.stringify(
-            isDev ? 'development' : 'production'
+            DEV ? 'development' : 'production'
         ),
         // Webpack constant, good for loading specific modules
-        __DEV__: isDev,
+        __DEV__: DEV,
     }),
 
     // This where we put the created extracting plugins
     extractCSSTextPlugin,
     extractStylusTextPlugin,
 
-    // This plugin allows to bundle some common chunks into one file
-    new webpack.optimize.CommonsChunkPlugin({
-        name: 'commons',
-        // The minimum number of chunks which need to contain
-        // a module before it's moved into the commons chunk
-        minChunks: Infinity,
-    }),
     // This plugin creates a HTML file to serve all webpack bundles
     // This is especially useful for webpack bundles that include a hash in the filename
     // which changes every compilation. You can either let the plugin
@@ -65,9 +58,9 @@ const basePlugins = [
     new HtmlWebpackPlugin({
         // The file to write the HTML to, in production we might need to
         // write into parent folder instead of assets folder
-        filename: isDev ? 'index.html' : '../index.html',
+        filename: DEV ? 'index.html' : '../index.html',
         // Config the title for generated HTML
-        title: isDev ? 'Development' : 'Production',
+        title: DEV ? 'Development' : 'Production',
         description: '',
         // Path to the template, we can using ejs template with no configurations
         template: resolve(__dirname, 'src/template.ejs'),
@@ -75,7 +68,7 @@ const basePlugins = [
         inject: true,
         // Minify config on production only, parsing an html-minifier config object
         // in production or disable in development
-        minify: isDev
+        minify: DEV
             ? false
             : {
                   removeComments: true,
@@ -94,7 +87,7 @@ const basePlugins = [
 
 // Let's define all the plugins for specific stage
 let plugins;
-if (isDev) {
+if (DEV) {
     const AddAssetHtmlPlugin = require('add-asset-html-webpack-plugin');
     const devPlugins = [
         // Enable Hot Module Replacement, that's webpack cons
@@ -104,18 +97,18 @@ if (isDev) {
         // This plugin will load our pre-built dll bundle for better development building
         new webpack.DllReferencePlugin({
             // Passing the manifest file
-            manifest: require(join(dllDir, 'vendors-manifest.json')),
+            manifest: require(join(DLL_DIR, 'vendors-manifest.json')),
             // And mapping the context of requests in manifest file
             context: resolve(__dirname),
         }),
         // In development, we need to inject a additional dll file built from DllPlugin
         new AddAssetHtmlPlugin({
-            filepath: join(dllDir, 'vendors.dll.js'),
+            filepath: join(DLL_DIR, 'vendors.dll.js'),
             includeSourcemap: false,
         }),
     ];
     // Concanate base plugins at the end of plugins list
-    plugins = devPlugins.concat(basePlugins);
+    plugins = basePlugins.concat(devPlugins);
 } else {
     const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 
@@ -138,9 +131,9 @@ if (isDev) {
         }),
     ];
     // Concanate base plugins at the end of plugins list
-    plugins = prodPlugins.concat(basePlugins);
+    plugins = basePlugins.concat(prodPlugins);
 }
-if (isAnalyzing) {
+if (ANALYZING) {
     // If ANALYZING is true, push a BundleAnalyzerPlugin at the end of plugins list
     const BundleAnalyzerPlugin = require('webpack-bundle-analyzer')
         .BundleAnalyzerPlugin;
@@ -148,58 +141,47 @@ if (isAnalyzing) {
 }
 
 module.exports = {
+    // Specify webpack bundle mode for environment variables
+    mode: DEV ? 'development' : 'production',
     entry: {
         // The main entry load from react-hot-loader/patch in development
-        app: isDev ? ['react-hot-loader/patch', './index.js'] : './index.js',
-        // This bundle include all common packages using in other bundles
-        commons: [
-            'react',
-            'react-dom',
-            'redux',
-            'redux-thunk',
-            'react-redux',
-            'react-router',
-            'react-router-redux',
-            'react-transition-group',
-            'immutable',
-            'lodash',
-        ],
+        app: './index.js',
     },
     // Resolve js, jsx and json file, then add an source dir alias for quick references
     resolve: {
         extensions: ['.js', '.jsx', '.json'],
         alias: {
-            '@app': srcDir,
+            '@app': SOURCE_DIR,
         },
     },
     // Specify webpack context folder
-    context: srcDir,
+    context: SOURCE_DIR,
     // Tell webpack how to write the completed files to disk
     output: {
         // Filename of each compiled file
-        filename: outputPrefix + '.js',
+        filename: OUTPUT_PREFIX + '.js',
         // Filename of chunks
-        chunkFilename: outputPrefix + '.chunk.js',
+        chunkFilename: OUTPUT_PREFIX + '.chunk.js',
         // Write all assets to /assets folder in ./dist
-        path: resolve(__dirname, join('dist', publicPath)),
-        publicPath,
+        path: resolve(__dirname, join('dist', PUBLIC_PATH)),
+        publicPath: PUBLIC_PATH,
     },
     // Specific webpack target built
     target: 'web',
     // Using source-map only in development
-    devtool: isDev ? 'cheap-module-eval-source-map' : false,
+    devtool: DEV ? 'cheap-module-eval-source-map' : false,
     // Config webpack-dev-server to enable HotModuleReplacement
     devServer: {
         contentBase: './dist',
-        publicPath: publicPath,
+        publicPath: PUBLIC_PATH,
         hot: true,
         inline: true,
         // Config the history fallback to public path
         historyApiFallback: {
-            index: publicPath,
+            index: PUBLIC_PATH,
             rewrites: {
                 from: /./,
-                to: publicPath,
+                to: PUBLIC_PATH,
             },
         },
     },
@@ -212,12 +194,12 @@ module.exports = {
                         loader: 'babel-loader',
                         options: {
                             // Tell babel-loader to cache files in development
-                            cacheDirectory: isDev,
+                            cacheDirectory: DEV,
                         },
                     },
                 ],
                 // Only using this loader in context folder
-                include: srcDir,
+                include: SOURCE_DIR,
             },
             {
                 // Using eslint to check js and jsx files before running other loaders
@@ -227,13 +209,13 @@ module.exports = {
                     loader: 'eslint-loader',
                     options: {
                         // In development, only show errors
-                        quiet: isDev,
+                        quiet: DEV,
                         // and cache checking information
-                        cache: isDev,
+                        cache: DEV,
                     },
                 },
                 // Only using this loader in context folder
-                include: srcDir,
+                include: SOURCE_DIR,
             },
             {
                 // In development, using fallback style-loader and css-loader with
@@ -246,7 +228,7 @@ module.exports = {
                     use: {
                         loader: 'css-loader',
                         options: {
-                            minimize: !isDev,
+                            minimize: !DEV,
                         },
                     },
                 }),
@@ -265,9 +247,9 @@ module.exports = {
                             loader: 'css-loader',
                             options: {
                                 modules: true,
-                                sourceMap: isDev,
+                                sourceMap: DEV,
                                 importLoaders: 1,
-                                minimize: !isDev,
+                                minimize: !DEV,
                                 localIdentName:
                                     '[path][name]__[local]--[hash:base64:5]',
                             },
@@ -297,11 +279,11 @@ module.exports = {
                             loader: 'css-loader',
                             options: {
                                 modules: true,
-                                sourceMap: isDev,
+                                sourceMap: DEV,
                                 importLoaders: 1,
                                 localIdentName:
                                     '[path][name]__[local]--[hash:base64:5]',
-                                minimize: !isDev,
+                                minimize: !DEV,
                             },
                         },
                         'stylus-loader',
@@ -324,7 +306,7 @@ module.exports = {
     // by default the maxEntrypointSize is 250kB
     performance: {
         // Only show the warning on production build
-        hints: isDev ? false : 'warning',
+        hints: DEV ? false : 'warning',
     },
     // Include all defined plugins
     plugins,
