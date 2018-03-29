@@ -5,8 +5,8 @@ export default class About extends Component {
     render() {
         return (
             <h3 className={styles.about}>
-				About me? Nothing special at all!
-				plz do it now haha that good now
+                About me? Nothing special at all! plz do it now haha that good
+                now
             </h3>
         );
     }

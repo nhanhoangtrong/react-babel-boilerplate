@@ -3,7 +3,8 @@ import PropTypes from 'prop-types';
 
 const SamplePresentation = ({ onClickToggleText, isShownText }) => {
     return (
-        <div>hello aa bb ccss ak ak u that terible ops!!!
+        <div>
+            hello aa bb ccss ak ak u that terible ops!!!
             <button onClick={() => onClickToggleText(isShownText)}>
                 {isShownText ? 'Hide Text' : 'Show Text'}
             </button>

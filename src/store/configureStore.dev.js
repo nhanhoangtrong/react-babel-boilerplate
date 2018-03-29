@@ -4,7 +4,9 @@ import enhancer from './enhancer';
 
 export default function configureStore(initialState) {
     /* eslint-disable no-underscore-dangle */
-    const createEnhancedStore = window.__REDUX_DEVTOOLS_EXTENSION__ ? window.__REDUX_DEVTOOLS_EXTENSION__()(createStore) : createStore;
+    const createEnhancedStore = window.__REDUX_DEVTOOLS_EXTENSION__
+        ? window.__REDUX_DEVTOOLS_EXTENSION__()(createStore)
+        : createStore;
 
     const store = enhancer(createEnhancedStore)(rootReducer, initialState);
     /* eslint-enable */

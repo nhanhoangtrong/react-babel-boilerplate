@@ -14,8 +14,10 @@ import { APP_STORAGE } from '@app/globals';
 export function serialize(immutableState) {
     const serializedState = {};
 
-    Object.keys(immutableState || {}).forEach( k => {
-        serializedState[k] = immutableState[k].toJS ? immutableState[k].toJS() : immutableState[k];
+    Object.keys(immutableState || {}).forEach((k) => {
+        serializedState[k] = immutableState[k].toJS
+            ? immutableState[k].toJS()
+            : immutableState[k];
     });
 
     return serializedState;
@@ -31,7 +33,7 @@ export function serialize(immutableState) {
 export function deserialize(objectState, immutable) {
     const deserializedState = {};
 
-    Object.keys(objectState || {}).forEach( k => {
+    Object.keys(objectState || {}).forEach((k) => {
         deserializedState[k] = fromJS(objectState[k]);
     });
 
@@ -45,7 +47,7 @@ export const store = configureStore(deserializedState);
 export const syncHistory = syncHistoryWithStore(browserHistory, store);
 
 store.subscribe(() => {
-    if(!storage.get('debug')) {
+    if (!storage.get('debug')) {
         storage.set(APP_STORAGE, serialize(store.getState()));
     }
 });
