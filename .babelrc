@@ -29,7 +29,7 @@
           {
             "modules": false,
             "targets": {
-              "chrome": 58
+              "chrome": 65
             },
             "debug": true,
             "useBuiltIns": "usage"
