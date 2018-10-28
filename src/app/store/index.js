@@ -2,8 +2,8 @@ import { browserHistory } from 'react-router';
 import { syncHistoryWithStore } from 'react-router-redux';
 import { fromJS } from 'immutable';
 import configureStore from './configureStore';
-import storage from '@app/libs/storage';
-import { APP_STORAGE } from '@app/globals';
+import storage from '@src/app/lib/storage';
+import { APP_STORAGE } from '@src/globals';
 
 /**
  * Serialize a immutable object to JS Object for saving into local storage

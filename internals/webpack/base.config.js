@@ -25,9 +25,9 @@ const extractStylusTextPlugin = new ExtractTextPlugin({
 });
 
 // Next, we need to define the source directory for webpack context
-const SOURCE_DIR = resolve(__dirname, 'src');
+const SOURCE_DIR = resolve(__dirname, '../../src');
 // the dll folder that contained pre-built dlls
-const DLL_DIR = resolve(__dirname, 'build');
+const DLL_DIR = resolve(__dirname, '../../build');
 // the public path of bundled files
 const PUBLIC_PATH = '/assets/';
 // and filename's prefix of output files
@@ -63,7 +63,7 @@ const basePlugins = [
         title: DEV ? 'Development' : 'Production',
         description: '',
         // Path to the template, we can using ejs template with no configurations
-        template: resolve(__dirname, 'src/template.ejs'),
+        template: resolve(__dirname, '../../src/template.ejs'),
         // Inject all bundles into the template, all javascript will be placed
         inject: true,
         // Minify config on production only, parsing an html-minifier config object
@@ -99,7 +99,7 @@ if (DEV) {
             // Passing the manifest file
             manifest: require(join(DLL_DIR, 'vendors-manifest.json')),
             // And mapping the context of requests in manifest file
-            context: resolve(__dirname),
+            context: resolve(__dirname, '../../'),
         }),
         // In development, we need to inject a additional dll file built from DllPlugin
         new AddAssetHtmlPlugin({
@@ -111,6 +111,7 @@ if (DEV) {
     plugins = basePlugins.concat(devPlugins);
 } else {
     const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
+    const { GenerateSW } = require('workbox-webpack-plugin');
 
     const prodPlugins = [
         // In production, we use UglifyJsPlugin for minimizing javascript bundles
@@ -129,6 +130,9 @@ if (DEV) {
             // And remove source map
             sourceMap: false,
         }),
+        // Generate Service Worker for caching offline-first strategy
+        // using Workbox
+        new GenerateSW(),
     ];
     // Concanate base plugins at the end of plugins list
     plugins = basePlugins.concat(prodPlugins);
@@ -151,7 +155,7 @@ module.exports = {
     resolve: {
         extensions: ['.js', '.jsx', '.json'],
         alias: {
-            '@app': SOURCE_DIR,
+            '@src': SOURCE_DIR,
         },
     },
     // Specify webpack context folder
@@ -163,7 +167,7 @@ module.exports = {
         // Filename of chunks
         chunkFilename: OUTPUT_PREFIX + '.chunk.js',
         // Write all assets to /assets folder in ./dist
-        path: resolve(__dirname, join('dist', PUBLIC_PATH)),
+        path: resolve(__dirname, join('../../dist', PUBLIC_PATH)),
         publicPath: PUBLIC_PATH,
     },
     // Specific webpack target built

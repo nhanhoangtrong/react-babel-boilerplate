@@ -2,7 +2,7 @@ const webpack = require('webpack');
 const { join, resolve } = require('path');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 
-const dllDir = resolve(__dirname, 'build');
+const DLL_DIR = resolve(__dirname, '../../build');
 
 module.exports = {
     mode: 'development',
@@ -22,7 +22,7 @@ module.exports = {
     ],
     // Output the compiled files to dll folder and specify the bundled library name
     output: {
-        path: dllDir,
+        path: DLL_DIR,
         filename: 'vendors.dll.js',
         library: 'vendors',
     },
@@ -30,14 +30,14 @@ module.exports = {
     devtool: 'eval',
     plugins: [
         // This plugin will clean the dll folder before compiling
-        new CleanWebpackPlugin(dllDir),
+        new CleanWebpackPlugin(DLL_DIR),
         // Define development env for React debug
         new webpack.DefinePlugin({
             'process.env.NODE_ENV': JSON.stringify('development'),
         }),
         // Finally, configure the DllPlugin to output the dll manifest file in dll folder
         new webpack.DllPlugin({
-            path: join(dllDir, 'vendors-manifest.json'),
+            path: join(DLL_DIR, 'vendors-manifest.json'),
             name: 'vendors',
         }),
     ],

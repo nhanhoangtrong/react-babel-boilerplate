@@ -1,23 +1,23 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { AppContainer } from 'react-hot-loader';
-import Root from './modules/Root';
-import { store, syncHistory } from './store';
+import App from '@src/app';
+import { store, syncHistory } from '@src/app/store';
 
-const render = (RootComponent) => {
+const render = (AppComponent) => {
     ReactDOM.render(
         <AppContainer>
-            <RootComponent store={store} history={syncHistory} />
+            <AppComponent store={store} history={syncHistory} />
         </AppContainer>,
         document.getElementById('root')
     );
 };
 
-render(Root);
+render(App);
 
 if (module.hot) {
-    module.hot.accept('./modules/Root', () => {
-        const NewRoot = require('./modules/Root');
-        render(NewRoot);
+    module.hot.accept('@src/app', () => {
+        const NewApp = require('@src/app').default;
+        render(NewApp);
     });
 }

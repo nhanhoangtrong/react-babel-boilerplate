@@ -4,5 +4,5 @@ import { shallow } from 'enzyme';
 
 test('Test About component', () => {
     const wrapper = shallow(<About />);
-    expect(wrapper.find('div').length).toEqual(1);
+    expect(wrapper.find('h3').length).toEqual(1);
 });

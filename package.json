@@ -5,20 +5,18 @@
   "main": "index.js",
   "scripts": {
     "start": "npm run build && http-server ./dist",
-    "build:dll":
-      "cross-env NODE_ENV=development webpack --progress --config dll.webpack.config.js",
-    "build": "cross-env NODE_ENV=production webpack --progress",
-    "dev": "cross-env NODE_ENV=development webpack-dev-server --progress",
+    "build:dll": "cross-env NODE_ENV=development webpack --progress --config internals/webpack/dll.config.js",
+    "build": "cross-env NODE_ENV=production webpack --progress --config internals/webpack/production.config.js",
+    "dev": "cross-env NODE_ENV=development webpack-dev-server --progress --config internals/webpack/development.config.js",
     "analyzer": "cross-env ANALYZING=true npm run build",
     "lint": "eslint --ext .jsx --ext .js --fix .",
-    "test": "jest",
+    "test": "jest --watch",
     "coverage": "jest --coverage",
     "prettier": "prettier --write src/**/*.{scss,js,jsx,json}"
   },
   "repository": {
     "type": "git",
-    "url":
-      "git+https://github.com/nhanhoangtrong/kendy-react-babel-boilerplate.git"
+    "url": "git+https://github.com/nhanhoangtrong/kendy-react-babel-boilerplate.git"
   },
   "keywords": [
     "react",
@@ -32,11 +30,9 @@
   "author": "Kendy Hoang",
   "license": "MIT",
   "bugs": {
-    "url":
-      "https://github.com/nhanhoangtrong/kendy-react-babel-boilerplate/issues"
+    "url": "https://github.com/nhanhoangtrong/kendy-react-babel-boilerplate/issues"
   },
-  "homepage":
-    "https://github.com/nhanhoangtrong/kendy-react-babel-boilerplate#readme",
+  "homepage": "https://github.com/nhanhoangtrong/kendy-react-babel-boilerplate#readme",
   "dependencies": {
     "classnames": "^2.2.5",
     "immutable": "^3.8.2",
@@ -100,15 +96,18 @@
     "webpack-bundle-analyzer": "^2.11.1",
     "webpack-cli": "^3.1.0",
     "webpack-dev-server": "^3.1.1",
-    "webpack-merge": "^4.1.2"
+    "webpack-merge": "^4.1.2",
+    "workbox-webpack-plugin": "^3.6.3"
   },
   "jest": {
-    "setupTestFrameworkScriptFile": "<rootDir>/setupTests.js",
-    "moduleFileExtensions": ["js", "jsx"],
+    "setupTestFrameworkScriptFile": "<rootDir>/internals/jest/setupTests.js",
+    "moduleFileExtensions": [
+      "js",
+      "jsx"
+    ],
     "moduleNameMapper": {
       ".*\\.(css|less|styl|scss|sass)$": "<rootDir>/__mocks__/styleMock.js",
-      ".*\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$":
-        "<rootDir>/__mocks__/fileMock.js",
+      ".*\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": "<rootDir>/__mocks__/fileMock.js",
       "@app(.*)$": "<rootDir>/src$1"
     }
   }
