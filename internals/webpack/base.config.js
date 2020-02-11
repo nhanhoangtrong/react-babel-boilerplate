@@ -35,7 +35,7 @@ const OUTPUT_PREFIX = DEV ? '[name]' : '[name].[chunkhash:8]';
 
 const basePlugins = [
     // First clean the ./dist forlder using CleanWebpackPlugin
-    new CleanWebpackPlugin('./dist'),
+    new CleanWebpackPlugin(),
     // This plugin allows us define some important constants
     new webpack.DefinePlugin({
         // Because React need the NODE_ENV in each stage
@@ -231,9 +231,6 @@ module.exports = {
                     fallback: 'style-loader',
                     use: {
                         loader: 'css-loader',
-                        options: {
-                            minimize: !DEV,
-                        },
                     },
                 }),
             },
@@ -253,7 +250,6 @@ module.exports = {
                                 modules: true,
                                 sourceMap: DEV,
                                 importLoaders: 1,
-                                minimize: !DEV,
                                 localIdentName:
                                     '[path][name]__[local]--[hash:base64:5]',
                             },
@@ -287,7 +283,6 @@ module.exports = {
                                 importLoaders: 1,
                                 localIdentName:
                                     '[path][name]__[local]--[hash:base64:5]',
-                                minimize: !DEV,
                             },
                         },
                         'stylus-loader',

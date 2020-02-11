@@ -13,8 +13,8 @@ module.exports = {
         'react-dom',
         'redux',
         'react-redux',
-        'react-router',
-        'react-router-redux',
+        'react-router-dom',
+        'connected-react-router',
         'react-transition-group',
         'immutable',
         'redux-thunk',
@@ -30,7 +30,7 @@ module.exports = {
     devtool: 'eval',
     plugins: [
         // This plugin will clean the dll folder before compiling
-        new CleanWebpackPlugin(DLL_DIR),
+        new CleanWebpackPlugin(),
         // Define development env for React debug
         new webpack.DefinePlugin({
             'process.env.NODE_ENV': JSON.stringify('development'),
