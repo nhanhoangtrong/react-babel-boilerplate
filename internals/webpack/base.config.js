@@ -2,7 +2,7 @@ const webpack = require('webpack');
 const { join, resolve } = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
-const CleanWebpackPlugin = require('clean-webpack-plugin');
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 
 // First, we need to check the environment constants
 // include NODE_ENV and ANALYZING
@@ -247,11 +247,13 @@ module.exports = {
                         {
                             loader: 'css-loader',
                             options: {
-                                modules: true,
+                                modules: {
+                                    mode: 'local',
+                                    localIdentName:
+                                        '[path][name]__[local]--[hash:base64:5]',
+                                },
                                 sourceMap: DEV,
                                 importLoaders: 1,
-                                localIdentName:
-                                    '[path][name]__[local]--[hash:base64:5]',
                             },
                         },
                         {
@@ -278,11 +280,13 @@ module.exports = {
                         {
                             loader: 'css-loader',
                             options: {
-                                modules: true,
+                                modules: {
+                                    mode: 'local',
+                                    localIdentName:
+                                        '[path][name]__[local]--[hash:base64:5]',
+                                },
                                 sourceMap: DEV,
                                 importLoaders: 1,
-                                localIdentName:
-                                    '[path][name]__[local]--[hash:base64:5]',
                             },
                         },
                         'stylus-loader',

@@ -1,6 +1,6 @@
 const webpack = require('webpack');
 const { join, resolve } = require('path');
-const CleanWebpackPlugin = require('clean-webpack-plugin');
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 
 const DLL_DIR = resolve(__dirname, '../../build');
 
