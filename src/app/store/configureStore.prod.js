@@ -1,7 +1,7 @@
 import { createStore } from 'redux';
-import rootReducer from './rootReducer';
+import createRootReducer from './createRootReducer';
 import enhancer from './enhancer';
 
-export default function configureStore(initialState) {
-    return createStore(rootReducer, initialState, enhancer);
+export default function configureStore(initialState, history) {
+    return createStore(createRootReducer(history), initialState, enhancer);
 }

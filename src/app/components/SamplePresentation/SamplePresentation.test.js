@@ -1,7 +1,14 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import SamplePresentation from './index';
+import SamplePage from './index';
 
-test('Test SamplePresentation', () => {
-    shallow(<SamplePresentation isShownText onClickToggleText={() => {}} />);
+test('Test SamplePage', () => {
+    shallow(
+        <SamplePage
+            isShownText
+            toggleText={(isShown) => {
+                console.log('toggled', { isShown });
+            }}
+        />
+    );
 });

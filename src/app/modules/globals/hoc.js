@@ -1,14 +1,12 @@
-import React from 'react';
 import { connect } from 'react-redux';
 import { showMain, hideMain } from './actions';
-import SamplePresentation from '@src/app/components/SamplePresentation';
 
 const mapStateToProps = (state) => ({
-    isShownText: state.sampleApp.get('isShownMain'),
+    isShownText: state.globals.get('isShownMain'),
 });
 
 const mapDispatchToProps = (dispatch) => ({
-    onClickToggleText: (isShownText) => {
+    toggleText: (isShownText) => {
         if (isShownText) {
             dispatch(hideMain());
         } else {
@@ -16,7 +14,7 @@ const mapDispatchToProps = (dispatch) => ({
         }
     },
 });
-export default connect(
+export const withTextState = connect(
     mapStateToProps,
     mapDispatchToProps
-)(SamplePresentation);
+);

@@ -1,8 +1,7 @@
-import { browserHistory } from 'react-router';
-import { syncHistoryWithStore } from 'react-router-redux';
 import { fromJS } from 'immutable';
 import configureStore from './configureStore';
 import storage from '@src/app/lib/storage';
+import { createBrowserHistory } from 'history';
 import { APP_STORAGE } from '@src/globals';
 
 /**
@@ -27,14 +26,16 @@ export function serialize(immutableState) {
  * Deserialize JS Object into an immutable object
  *
  * @param {object} objectState
- * @param {boolean} immutable
+ * @param {boolean} isImmutable
  * @returns {object}
  */
-export function deserialize(objectState, immutable) {
+export function deserialize(objectState, isImmutable = true) {
     const deserializedState = {};
 
     Object.keys(objectState || {}).forEach((k) => {
-        deserializedState[k] = fromJS(objectState[k]);
+        deserializedState[k] = isImmutable
+            ? fromJS(objectState[k])
+            : objectState[k];
     });
 
     return deserializedState;
@@ -42,9 +43,9 @@ export function deserialize(objectState, immutable) {
 
 const deserializedState = deserialize(storage.get(APP_STORAGE));
 
-export const store = configureStore(deserializedState);
+export const history = createBrowserHistory();
 
-export const syncHistory = syncHistoryWithStore(browserHistory, store);
+export const store = configureStore(deserializedState, history);
 
 store.subscribe(() => {
     if (!storage.get('debug')) {

@@ -1,16 +1,19 @@
-import React, { Component } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import { Provider } from 'react-redux';
-import { Router } from 'react-router';
-import routes from '@src/app/routes';
+import { ConnectedRouter } from 'connected-react-router';
+import { Switch, Route } from 'react-router-dom';
 
-// key={Math.random()} obviously it changes all components states to their default states
+import IndexPage from '@src/app/pages/IndexPage';
+
 const App = ({ store, history }) => {
     return (
         <Provider store={store}>
-            <Router key={Math.random()} history={history}>
-                {routes}
-            </Router>
+            <ConnectedRouter history={history}>
+                <Switch>
+                    <Route path="/" exact component={IndexPage} />
+                </Switch>
+            </ConnectedRouter>
         </Provider>
     );
 };

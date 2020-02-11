@@ -2,12 +2,12 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { AppContainer } from 'react-hot-loader';
 import App from '@src/app';
-import { store, syncHistory } from '@src/app/store';
+import { store, history } from '@src/app/store';
 
 const render = (AppComponent) => {
     ReactDOM.render(
         <AppContainer>
-            <AppComponent store={store} history={syncHistory} />
+            <AppComponent store={store} history={history} />
         </AppContainer>,
         document.getElementById('root')
     );
