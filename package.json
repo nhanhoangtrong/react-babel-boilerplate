@@ -35,7 +35,7 @@
   "homepage": "https://github.com/nhanhoangtrong/kendy-react-babel-boilerplate#readme",
   "dependencies": {
     "classnames": "^2.2.5",
-    "connected-react-router": "^6.3.2",
+    "connected-react-router": "^6.8.0",
     "core-js": "^2.6.11",
     "history": "^4.7.2",
     "immutable": "^3.8.2",
