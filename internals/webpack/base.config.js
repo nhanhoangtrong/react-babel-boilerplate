@@ -110,26 +110,9 @@ if (DEV) {
     // Concanate base plugins at the end of plugins list
     plugins = basePlugins.concat(devPlugins);
 } else {
-    const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
     const { GenerateSW } = require('workbox-webpack-plugin');
 
     const prodPlugins = [
-        // In production, we use UglifyJsPlugin for minimizing javascript bundles
-        // Using newest built from plugin instead of webpack built
-        new UglifyJsPlugin({
-            // Passing an uglify option object
-            uglifyOptions: {
-                compress: {
-                    warnings: false,
-                    comparisons: false,
-                },
-                output: {
-                    comments: false,
-                },
-            },
-            // And remove source map
-            sourceMap: false,
-        }),
         // Generate Service Worker for caching offline-first strategy
         // using Workbox
         new GenerateSW(),

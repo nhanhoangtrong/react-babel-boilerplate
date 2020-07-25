@@ -8,7 +8,8 @@
         "targets": {
           "browsers": ["last 2 versions"]
         },
-        "useBuiltIns": "usage"
+        "useBuiltIns": "usage",
+        "corejs": 3
       }
     ],
     "@babel/preset-react"
@@ -29,10 +30,11 @@
           {
             "modules": false,
             "targets": {
-              "chrome": 65
+              "browsers": ["last 2 Chrome versions"]
             },
-            "debug": true,
-            "useBuiltIns": "usage"
+            "useBuiltIns": "usage",
+            "corejs": 3,
+            "debug": true
           }
         ],
         "@babel/preset-react"
