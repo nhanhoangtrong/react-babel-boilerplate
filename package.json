@@ -71,7 +71,7 @@
     "dotenv": "^8.2.0",
     "enzyme": "^3.3.0",
     "enzyme-adapter-react-16": "^1.1.1",
-    "eslint": "^7.5.0",
+    "eslint": "^7.6.0",
     "eslint-loader": "^4.0.2",
     "eslint-plugin-react": "^7.20.5",
     "extract-text-webpack-plugin": "^4.0.0-beta.0",
